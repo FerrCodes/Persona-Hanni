@@ -282,7 +282,7 @@ filterBtns.forEach(btn => {
         const filter = btn.getAttribute('data-filter');
         
         if (boothImg) {
-            boothImg.classList.remove('filter-vintage', 'filter-warm', 'filter-cool', 'filter-dream');
+            boothImg.classList.remove('filter-vintage', 'filter-warm', 'filter-cool', 'filter-dream', 'filter-pastel', 'filter-mocha', 'filter-neon', 'filter-glow', 'filter-aesthetic');
             
             if (filter !== 'none') {
                 boothImg.classList.add(`filter-${filter}`);

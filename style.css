@@ -3324,3 +3324,255 @@ body.dark-mode .particle {
         height: 320px;
     }
 }
+/* ========================================
+   NEW FRAMES - AESTHETIC ADDITIONS
+   ======================================== */
+
+/* Glitter Frame */
+.frame-glitter {
+    background: 
+        radial-gradient(circle at 15% 20%, rgba(255, 215, 0, 0.3) 0%, transparent 15%),
+        radial-gradient(circle at 85% 25%, rgba(255, 192, 203, 0.3) 0%, transparent 15%),
+        radial-gradient(circle at 25% 80%, rgba(138, 43, 226, 0.2) 0%, transparent 15%),
+        radial-gradient(circle at 75% 85%, rgba(0, 191, 255, 0.2) 0%, transparent 15%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 25%);
+    border: 4px solid transparent;
+    border-image: linear-gradient(45deg, #FFD700, #FFC0CB, #8A2BE2, #00BFFF) 1;
+    animation: glitterShine 3s ease-in-out infinite;
+}
+
+.frame-glitter::before {
+    content: '✨ ✨ ✨';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 1.5rem;
+    z-index: 3;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+.frame-glitter::after {
+    content: '✨ ✨ ✨';
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 1.5rem;
+    z-index: 3;
+    animation: twinkle 2s ease-in-out infinite 1s;
+}
+
+@keyframes glitterShine {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes twinkle {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Kawaii Frame */
+.frame-kawaii {
+    background: 
+        linear-gradient(to bottom, rgba(255, 182, 193, 0.3) 0%, transparent 30%, transparent 70%, rgba(255, 182, 193, 0.3) 100%);
+    border: 5px dashed #FFB6C1;
+    box-shadow: inset 0 0 20px rgba(255, 192, 203, 0.4);
+}
+
+.frame-kawaii::before {
+    content: '🎀 ( ˶ˆᗜˆ˵ ) 🎀';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 1.3rem;
+    z-index: 3;
+    color: #FF69B4;
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+}
+
+.frame-kawaii::after {
+    content: '💕 ⸜(｡˃ ᵕ ˂ )⸝♡ 💕';
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 1.3rem;
+    z-index: 3;
+    color: #FF69B4;
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+}
+
+/* Vintage Film Frame */
+.frame-vintage {
+    background: 
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 10px, transparent 10px, transparent 20px),
+        linear-gradient(to bottom, rgba(139, 69, 19, 0.2) 0%, rgba(210, 180, 140, 0.2) 100%);
+    border: 8px solid;
+    border-color: #8B4513 #D2B48C #8B4513 #D2B48C;
+    box-shadow: 
+        inset 0 0 30px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(139, 69, 19, 0.4);
+}
+
+.frame-vintage::before {
+    content: '📽️';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 2rem;
+    z-index: 3;
+}
+
+.frame-vintage::after {
+    content: '1985';
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    color: #8B4513;
+    z-index: 3;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+}
+
+/* Rainbow Frame */
+.frame-rainbow {
+    background: transparent;
+    border: 6px solid transparent;
+    border-image: linear-gradient(45deg, 
+        #FF0000, #FF7F00, #FFFF00, #00FF00, 
+        #0000FF, #4B0082, #9400D3, #FF0000) 1;
+    animation: rainbowShift 5s linear infinite;
+}
+
+.frame-rainbow::before {
+    content: '🌈';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 2.5rem;
+    z-index: 3;
+    animation: float 3s ease-in-out infinite;
+}
+
+.frame-rainbow::after {
+    content: '✨🌟✨';
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    z-index: 3;
+}
+
+@keyframes rainbowShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+/* Bubble Frame */
+.frame-bubble {
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(173, 216, 230, 0.4) 0%, transparent 15%),
+        radial-gradient(circle at 80% 25%, rgba(176, 224, 230, 0.4) 0%, transparent 18%),
+        radial-gradient(circle at 15% 70%, rgba(135, 206, 235, 0.3) 0%, transparent 12%),
+        radial-gradient(circle at 75% 80%, rgba(176, 224, 230, 0.4) 0%, transparent 16%),
+        radial-gradient(circle at 50% 50%, rgba(173, 216, 230, 0.3) 0%, transparent 20%),
+        radial-gradient(circle at 35% 15%, rgba(135, 206, 235, 0.3) 0%, transparent 10%),
+        linear-gradient(135deg, rgba(230, 247, 255, 0.3) 0%, rgba(176, 224, 230, 0.2) 100%);
+    border: 3px solid rgba(135, 206, 235, 0.5);
+    animation: bubbleFloat 4s ease-in-out infinite;
+}
+
+.frame-bubble::before {
+    content: '💭';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 2rem;
+    z-index: 3;
+    animation: float 3s ease-in-out infinite;
+}
+
+.frame-bubble::after {
+    content: '🫧 🫧 🫧';
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    z-index: 3;
+    animation: float 3s ease-in-out infinite 1s;
+}
+
+@keyframes bubbleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+/* ========================================
+   NEW FILTERS - AESTHETIC ADDITIONS
+   ======================================== */
+
+/* Pastel Filter */
+.filter-pastel {
+    filter: saturate(0.7) brightness(1.15) contrast(0.9) hue-rotate(5deg);
+}
+
+/* Mocha Filter */
+.filter-mocha {
+    filter: sepia(0.3) saturate(1.1) contrast(1.05) brightness(0.98) hue-rotate(-5deg);
+}
+
+/* Neon Filter */
+.filter-neon {
+    filter: saturate(1.8) contrast(1.3) brightness(1.05) hue-rotate(-15deg);
+}
+
+/* Soft Glow Filter */
+.filter-glow {
+    filter: brightness(1.2) saturate(1.3) contrast(0.9) blur(0.5px);
+}
+
+/* Aesthetic Filter */
+.filter-aesthetic {
+    filter: saturate(0.85) brightness(1.12) contrast(0.95) sepia(0.1);
+}
+
+/* ========================================
+   DARK MODE FOR NEW FRAMES
+   ======================================== */
+
+body.dark-mode .frame-glitter {
+    border-image: linear-gradient(45deg, #FFD700, #9370DB, #4169E1, #00CED1) 1;
+}
+
+body.dark-mode .frame-kawaii {
+    border-color: #9370DB;
+    background: linear-gradient(to bottom, rgba(147, 112, 219, 0.2) 0%, transparent 30%, transparent 70%, rgba(147, 112, 219, 0.2) 100%);
+}
+
+body.dark-mode .frame-vintage {
+    border-color: #A0826D #C8B091 #A0826D #C8B091;
+}
+
+body.dark-mode .frame-rainbow {
+    border-image: linear-gradient(45deg, 
+        #FF1493, #FF69B4, #DDA0DD, #9370DB, 
+        #4169E1, #00CED1, #FF1493) 1;
+}
+
+body.dark-mode .frame-bubble {
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(72, 118, 255, 0.3) 0%, transparent 15%),
+        radial-gradient(circle at 80% 25%, rgba(88, 101, 242, 0.3) 0%, transparent 18%),
+        radial-gradient(circle at 15% 70%, rgba(114, 137, 218, 0.2) 0%, transparent 12%),
+        radial-gradient(circle at 75% 80%, rgba(88, 101, 242, 0.3) 0%, transparent 16%),
+        linear-gradient(135deg, rgba(30, 30, 63, 0.3) 0%, rgba(44, 47, 72, 0.2) 100%);
+    border-color: rgba(88, 101, 242, 0.6);
+}
