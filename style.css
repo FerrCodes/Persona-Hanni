@@ -85,6 +85,7 @@ html {
 }
 
 body {
+    -webkit-overflow-scrolling: touch;
     font-family: var(--font-main);
     background: var(--theme-bg);
     color: var(--text);
