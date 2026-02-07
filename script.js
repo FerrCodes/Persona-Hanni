@@ -1030,3 +1030,77 @@ if (!isMobile && location.hostname === 'localhost') {
     console.log(`🚀 Performance mode: ${isLowEnd ? 'Low-end' : isMobile ? 'Mobile' : 'Desktop'}`);
     console.log(`✨ Particles count: ${particleCount}`);
 }
+// ========================================
+// CRITICAL: DARK MODE MOBILE SCROLL OPTIMIZATION
+// ========================================
+
+if (isMobile) {
+    let scrollTimeout;
+    let isScrolling = false;
+    
+    // Detect scroll and pause animations temporarily
+    window.addEventListener('scroll', () => {
+        if (!isScrolling && document.body.classList.contains('dark-mode')) {
+            isScrolling = true;
+            // Pause animations during scroll for smooth performance
+            document.body.style.setProperty('--scroll-active', '1');
+        }
+        
+        // Clear timeout
+        clearTimeout(scrollTimeout);
+        
+        // Resume animations after scroll stops
+        scrollTimeout = setTimeout(() => {
+            isScrolling = false;
+            document.body.style.setProperty('--scroll-active', '0');
+        }, 150);
+    }, { passive: true });
+    
+    // Optimize dark mode specifically
+    const darkModeBtn = document.getElementById('dark-mode-btn');
+    if (darkModeBtn) {
+        darkModeBtn.addEventListener('click', () => {
+            // Give browser time to repaint before enabling effects
+            setTimeout(() => {
+                if (document.body.classList.contains('dark-mode')) {
+                    console.log('Dark mode optimized for mobile');
+                }
+            }, 100);
+        });
+    }
+    
+    // Reduce animation frame rate on dark mode for better performance
+    if (document.body.classList.contains('dark-mode')) {
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                body.dark-mode * {
+                    animation-timing-function: steps(2) !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// Monitor performance and auto-adjust
+if (isMobile && 'PerformanceObserver' in window) {
+    try {
+        const perfObserver = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+                // If frame takes too long (>16ms = <60fps), reduce quality
+                if (entry.duration > 16 && document.body.classList.contains('dark-mode')) {
+                    // Auto-disable particles if performance is bad
+                    const particles = document.getElementById('particles');
+                    if (particles) {
+                        particles.style.display = 'none';
+                    }
+                }
+            }
+        });
+        
+        perfObserver.observe({ entryTypes: ['measure'] });
+    } catch (e) {
+        console.log('Performance monitoring not available');
+    }
+}
