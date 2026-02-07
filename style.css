@@ -3581,3 +3581,124 @@ body.dark-mode .frame-bubble {
         linear-gradient(135deg, rgba(30, 30, 63, 0.3) 0%, rgba(44, 47, 72, 0.2) 100%);
     border-color: rgba(88, 101, 242, 0.6);
 }
+/* ========================================
+   CRITICAL FIX: DARK MODE MOBILE SCROLL PERFORMANCE
+   Ditambahkan untuk memperbaiki scroll janky di dark mode mobile
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Fix janky scroll on dark mode mobile */
+    body.dark-mode {
+        /* Use solid color instead of gradient - much lighter */
+        background: #1a1a2e !important;
+        /* Remove ALL animations on dark mode mobile */
+        animation: none !important;
+        /* Disable transitions during scroll */
+        transition: none !important;
+        /* Force hardware acceleration but don't reserve memory */
+        transform: translateZ(0);
+        will-change: auto;
+        /* Enable momentum scrolling on iOS */
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Disable all complex backgrounds on dark mode mobile */
+    body.dark-mode::before,
+    body.dark-mode::after {
+        display: none !important;
+    }
+    
+    /* Simplify all shadow effects */
+    body.dark-mode * {
+        text-shadow: none !important;
+    }
+    
+    body.dark-mode .hero h1 {
+        text-shadow: 2px 2px 0px #5865F2 !important;
+    }
+    
+    /* Remove glow effects from cards */
+    body.dark-mode .trait-card,
+    body.dark-mode .game-box,
+    body.dark-mode .control-group {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+        /* Disable transform animations */
+        transform: none !important;
+    }
+    
+    body.dark-mode .trait-card:hover,
+    body.dark-mode .game-box:hover {
+        transform: none !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Disable all floating animations on dark mode mobile */
+    body.dark-mode .floating-element,
+    body.dark-mode .sticker {
+        animation: none !important;
+        opacity: 0.3;
+    }
+    
+    /* Simplify navbar on dark mode mobile */
+    body.dark-mode .navbar {
+        background: #1e1e3f !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Disable image border animations */
+    body.dark-mode #hanni-img,
+    body.dark-mode .booth-img {
+        animation: none !important;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Disable music player glow effects */
+    body.dark-mode .music-player-real {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    /* Disable visualizer on dark mode mobile to save CPU */
+    body.dark-mode .visualizer {
+        display: none !important;
+    }
+    
+    /* Simplify buttons */
+    body.dark-mode .pixel-btn {
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2) !important;
+        transition: transform 0.2s ease !important;
+    }
+    
+    body.dark-mode .pixel-btn:hover {
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    /* Disable all backdrop filters - VERY EXPENSIVE */
+    body.dark-mode .control-group,
+    body.dark-mode .speech-bubble,
+    body.dark-mode .badge,
+    body.dark-mode .track-info-real {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    /* Prevent layout shift during scroll */
+    body.dark-mode section {
+        contain: layout style;
+    }
+}
+
+/* Additional optimization for low-end devices */
+@media (max-width: 768px) and (max-height: 800px) {
+    body.dark-mode {
+        /* Even simpler for smaller screens */
+        background: #16213e !important;
+    }
+    
+    /* Hide all decorative elements */
+    body.dark-mode .hero-decorations,
+    body.dark-mode .sticker-decorations {
+        display: none !important;
+    }
+}
