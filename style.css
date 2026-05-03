@@ -92,7 +92,7 @@ body {
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.5s ease, color 0.5s ease !important;
     cursor: url('https://cur.cursors-4u.net/cursors/cur-2/cur116.cur'), auto;
     position: relative;
     padding-top: 80px; /* Space for fixed navbar */
@@ -3700,5 +3700,70 @@ body.dark-mode .frame-bubble {
     body.dark-mode .hero-decorations,
     body.dark-mode .sticker-decorations {
         display: none !important;
+    }
+}
+
+/* ========================================
+COZY MODE MOBILE PERFORMANCE FIX
+======================================== */
+@media (max-width: 768px) {
+    /* 1. Ganti gradient animasi → warna solid */
+    body.potato-mode {
+        background: #FFF5E4 !important;
+        animation: none !important;
+        transition: background 0.3s ease, color 0.3s ease !important;
+    }
+
+    /* 2. Matikan pseudo-elements floating */
+    body.potato-mode::before,
+    body.potato-mode::after {
+        display: none !important;
+    }
+
+    /* 3. Hentikan SEMUA keyframes berat */
+    body.potato-mode .hero h1,
+    body.potato-mode #hanni-img,
+    body.potato-mode .speech-bubble,
+    body.potato-mode .card-icon,
+    body.potato-mode .trait-card,
+    body.potato-mode .logo {
+        animation: none !important;
+        transform: none !important;
+        transition: transform 0.2s ease !important;
+    }
+
+    /* 4. Ganti box-shadow animasi → static shadow */
+    body.potato-mode #hanni-img,
+    body.potato-mode .speech-bubble,
+    body.potato-mode .trait-card,
+    body.potato-mode .game-container,
+    body.potato-mode .control-group {
+        box-shadow: 0 4px 12px rgba(255, 182, 193, 0.25) !important;
+    }
+
+    /* 5. Sederhanakan background kompleks */
+    body.potato-mode .music-player-real,
+    body.potato-mode .navbar,
+    body.potato-mode .personality,
+    body.potato-mode .sticker-zone {
+        background: #FFF8F5 !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* 6. Optimasi hover → ganti jadi tap feedback */
+    body.potato-mode .pixel-btn:active,
+    body.potato-mode .trait-card:active,
+    body.potato-mode .upgrade-btn:active {
+        transform: scale(0.96) !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+    }
+
+    /* 7. Paksa GPU compositing hanya pada elemen yang benar-benar perlu */
+    body.potato-mode .hero-image-wrapper img,
+    body.potato-mode .photo-frame {
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
 }

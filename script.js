@@ -391,84 +391,95 @@ addStickerBtns.forEach(btn => {
 });
 
 // ========================================
-// PHOTO BOOTH DOWNLOAD (FIXED)
+// PHOTO BOOTH DOWNLOAD (OPTIMIZED + MOBILE FALLBACK)
 // ========================================
 const downloadPhotoBtn = document.getElementById('download-photo');
-
 if (downloadPhotoBtn) {
     downloadPhotoBtn.addEventListener('click', async () => {
         const photoFrame = document.getElementById('photo-frame');
-        
-        if (!photoFrame) {
-            alert('Error: Photo frame tidak ditemukan!');
-            return;
-        }
-        
-        // Simpan state awal button
+        if (!photoFrame) return alert('❌ Photo frame tidak ditemukan!');
+
         const originalText = downloadPhotoBtn.innerText;
-        downloadPhotoBtn.innerText = "⏳ Loading...";
+        downloadPhotoBtn.innerText = "⏳ Processing...";
         downloadPhotoBtn.disabled = true;
-        
+
+        // ⚡ Smart scale berdasarkan device
+        const isMobile = window.innerWidth < 768 || navigator.hardwareConcurrency <= 4;
+        const renderScale = isMobile ? 2 : 3;
+        const timeoutMs = isMobile ? 5000 : 8000;
+
+        let timeoutId;
+        const timeoutPromise = new Promise((_, reject) => {
+            timeoutId = setTimeout(() => reject(new Error('Timeout: Render terlalu lama')), timeoutMs);
+        });
+
         try {
-            // Tunggu sebentar agar DOM settle (stiker dll)
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
-            // Capture dengan html2canvas
-            const canvas = await html2canvas(photoFrame, {
-                scale: 3, // High res (3x)
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: null, // Transparan jika perlu
-                logging: false,
-                onclone: (clonedDoc) => {
-                    // Pastikan cloned element visible & fully rendered
-                    const clonedFrame = clonedDoc.getElementById('photo-frame');
-                    if (clonedFrame) {
-                        clonedFrame.style.transform = 'none';
-                        clonedFrame.style.overflow = 'visible';
+            const canvas = await Promise.race([
+                html2canvas(photoFrame, {
+                    scale: renderScale,
+                    useCORS: true,
+                    allowTaint: false, // Lebih aman, hindari tainted canvas
+                    backgroundColor: null,
+                    logging: false,
+                    windowWidth: photoFrame.offsetWidth,
+                    windowHeight: photoFrame.offsetHeight,
+                    onclone: (clonedDoc) => {
+                        const clone = clonedDoc.getElementById('photo-frame');
+                        if (clone) {
+                            // 🧹 Strip CSS yang berat & sering bug di html2canvas
+                            clone.style.transform = 'none';
+                            clone.style.boxShadow = 'none';
+                            clone.style.backdropFilter = 'none';
+                            clone.style.webkitBackdropFilter = 'none';
+                            clone.style.overflow = 'visible';
+                            // Hapus animasi agar tidak freeze saat render
+                            clone.querySelectorAll('*').forEach(el => el.style.animation = 'none');
+                        }
                     }
-                }
-            });
-            
-            // Convert ke blob untuk download lebih smooth
-            canvas.toBlob((blob) => {
-                if (!blob) {
-                    throw new Error('Gagal membuat gambar');
-                }
-                
-                // Buat URL dan trigger download
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `hanni-booth-${Date.now()}.png`;
-                document.body.appendChild(link);
-                link.click();
-                
-                // Cleanup
-                setTimeout(() => {
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
-                }, 100);
-                
-                // Success feedback
-                downloadPhotoBtn.innerText = "✅ Saved!";
-                setTimeout(() => {
-                    downloadPhotoBtn.innerText = originalText;
-                    downloadPhotoBtn.disabled = false;
-                }, 2000);
-                
-            }, 'image/png', 1.0);
-            
+                }),
+                timeoutPromise
+            ]);
+
+            // Wrap toBlob dalam try-catch untuk tangkap SecurityError (CORS)
+            try {
+                canvas.toBlob((blob) => {
+                    clearTimeout(timeoutId);
+                    if (!blob) throw new Error('Blob generation failed');
+
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `hanni-booth-${Date.now()}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+
+                    downloadPhotoBtn.innerText = "✅ Saved!";
+                }, 'image/png', 0.9); // 0.9 lebih cepat, kualitas masih sangat baik
+            } catch (blobErr) {
+                throw new Error('Canvas tainted/CORS block');
+            }
         } catch (error) {
-            console.error('Download error:', error);
-            
-            // Fallback: instruksi manual kalau gagal (CORS issue)
-            alert(`⚠️ Auto-download gagal (kemungkinan CORS).\n\nSolusi manual:\n• Windows: Win + Shift + S\n• Mac: Cmd + Shift + 4\n• HP: Screenshot seperti biasa`);
-            
+            console.warn('⚠️ html2canvas fallback triggered:', error.message);
+            showManualScreenshotGuide();
+        } finally {
             downloadPhotoBtn.innerText = originalText;
             downloadPhotoBtn.disabled = false;
         }
     });
+
+    function showManualScreenshotGuide() {
+        const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const guide = isiOS 
+            ? "📱 iOS: Tekan Power + Volume Up bersamaan" 
+            : "📱 Android: Tekan Power + Volume Down bersamaan";
+        
+        alert(`⚠️ Auto-download dilewati (CORS/performa).\n\n${guide}\n💡 Tip: Pastikan foto sudah load penuh sebelum screenshot.`);
+    }
 }
 
 // ========================================
