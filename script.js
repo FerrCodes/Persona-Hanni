@@ -8,14 +8,13 @@ const isLowEnd = isMobile && (navigator.hardwareConcurrency <= 4 || navigator.de
 
 // Throttle function for scroll events
 function throttle(func, wait) {
-    let timeout;
+    let lastTime = 0;
     return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+        const now = Date.now();
+        if (now - lastTime >= wait) {
+            func.apply(this, args);
+            lastTime = now;
+        }
     };
 }
 
@@ -1041,58 +1040,7 @@ if (!isMobile && location.hostname === 'localhost') {
     console.log(`🚀 Performance mode: ${isLowEnd ? 'Low-end' : isMobile ? 'Mobile' : 'Desktop'}`);
     console.log(`✨ Particles count: ${particleCount}`);
 }
-// ========================================
-// CRITICAL: DARK MODE MOBILE SCROLL OPTIMIZATION
-// ========================================
 
-if (isMobile) {
-    let scrollTimeout;
-    let isScrolling = false;
-    
-    // Detect scroll and pause animations temporarily
-    window.addEventListener('scroll', () => {
-        if (!isScrolling && document.body.classList.contains('dark-mode')) {
-            isScrolling = true;
-            // Pause animations during scroll for smooth performance
-            document.body.style.setProperty('--scroll-active', '1');
-        }
-        
-        // Clear timeout
-        clearTimeout(scrollTimeout);
-        
-        // Resume animations after scroll stops
-        scrollTimeout = setTimeout(() => {
-            isScrolling = false;
-            document.body.style.setProperty('--scroll-active', '0');
-        }, 150);
-    }, { passive: true });
-    
-    // Optimize dark mode specifically
-    const darkModeBtn = document.getElementById('dark-mode-btn');
-    if (darkModeBtn) {
-        darkModeBtn.addEventListener('click', () => {
-            // Give browser time to repaint before enabling effects
-            setTimeout(() => {
-                if (document.body.classList.contains('dark-mode')) {
-                    console.log('Dark mode optimized for mobile');
-                }
-            }, 100);
-        });
-    }
-    
-    // Reduce animation frame rate on dark mode for better performance
-    if (document.body.classList.contains('dark-mode')) {
-        const style = document.createElement('style');
-        style.textContent = `
-            @media (max-width: 768px) {
-                body.dark-mode * {
-                    animation-timing-function: steps(2) !important;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
 
 // Monitor performance and auto-adjust
 if (isMobile && 'PerformanceObserver' in window) {
