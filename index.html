@@ -14,11 +14,12 @@
 
 <body>
 
-        <!-- Loading Spinner -->
+    <!-- Loading Spinner -->
     <div id="loading-screen">
         <div class="spinner"></div>
         <p>Loading Fanpage...</p>
     </div>
+
 
     <!-- Particles Background -->
     <div class="particles-container" id="particles"></div>
@@ -78,6 +79,7 @@
             <div class="floating-element bread">🥖</div>
         </div>
 
+        <!-- Kiri: Teks & Musik -->
         <div class="hero-content">
             <div class="badge">NewJeans Member</div>
             <h1 class="glitch" data-text="HANNI">하니</h1>
@@ -88,20 +90,15 @@
                 <audio id="bg-music" loop preload="metadata">
                     <source src="assets/music/darling-cover.mp3" type="audio/mpeg">
                 </audio>
-
                 <div class="player-controls">
                     <button id="play-pause-btn" class="control-btn" aria-label="Play or pause music">▶</button>
-
                     <div class="track-info-real">
                         <span class="scrolling-text">🎵 Darling - cover by Hanni 🎵</span>
                     </div>
-
                     <div class="volume-control">
                         <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
                     </div>
                 </div>
-
-                <!-- Visualizer -->
                 <div class="visualizer" id="visualizer">
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -112,6 +109,7 @@
             </div>
         </div>
 
+        <!-- Kanan: Foto + Outfit Selector -->
         <div class="hero-image-wrapper">
             <!-- Sparkle Container -->
             <div class="sparkle-container" id="sparkle-container"></div>
@@ -129,9 +127,9 @@
 
             <div class="outfit-selector">
                 <button class="outfit-btn" data-img="assets/img/default.jpg" title="Default">🧢</button>
-                <button class="outfit-btn" data-img="assets/img/Gucci.jpg" title="Gucci">👜</button>
-                <button class="outfit-btn" data-img="assets/img/myboo.jpg" title="Stage">🎤</button>
-                <button class="outfit-btn" data-img="assets/img/hn22.jpg" title="Photo">🐰</button>
+                <button class="outfit-btn" data-img="assets/img/hn2.jpg" title="Photo 2">👜</button>
+                <button class="outfit-btn" data-img="assets/img/hn3.jpg" title="Photo 3">🎤</button>
+                <button class="outfit-btn" data-img="assets/img/hn22.jpg" title="Photo 4">🐰</button>
             </div>
         </div>
     </header>
@@ -171,8 +169,6 @@
     <!-- Photo Booth -->
     <section class="photo-booth-section">
         <h2 class="section-title">📸 Hanni's Photo Booth</h2>
-        <p class="section-desc">Customize your favorite Hanni photo!</p>
-
         <div class="photo-booth-container">
             <div class="photo-frame" id="photo-frame" title="Hanni">
                 <img src="assets/img/home.jpg" alt="Hanni" id="booth-img" class="booth-img" loading="lazy">
@@ -228,6 +224,7 @@
                         <button class="add-sticker-btn" data-sticker="💙">💙</button>
                         <button class="add-sticker-btn" data-sticker="🌸">🌸</button>
                     </div>
+                    <button id="clear-photo-stickers-btn" class="pixel-btn" aria-label="Clear all photo stickers" style="margin-top: 15px; width: 100%;">🧹 Bersihkan Semua Stiker</button>
                 </div>
 
                 <button id="download-photo" class="pixel-btn" aria-label="Download photo">📥 Download</button>

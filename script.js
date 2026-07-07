@@ -1082,14 +1082,36 @@ if (isMobile && 'PerformanceObserver' in window) {
 }
 
 // ========================================
-// HILANGKAN LOADING SCREEN SETELAH SEMUA SIAP
+// LOADING SCREEN + CREDIT CRAFTED BY FERI
 // ========================================
 window.addEventListener('load', function() {
     const loadingScreen = document.getElementById('loading-screen');
-    if (loadingScreen) {
+    const loadingText = loadingScreen?.querySelector('p');
+    const spinner = loadingScreen?.querySelector('.spinner');
+
+    if (loadingScreen && loadingText) {
+        // Tunggu sebentar agar loading awal terlihat
         setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-        }, 400); // Kasih jeda 0.4 detik biar transisi halus
+            // Sembunyikan spinner
+            if (spinner) {
+                spinner.style.display = 'none';
+            }
+
+            // Ubah teks loading menjadi credit
+            loadingText.textContent = '✨ Crafted by Feri';
+            
+            // Efek fade-in halus untuk teks
+            loadingText.style.transition = 'opacity 0.5s ease';
+            loadingText.style.opacity = '0';
+            setTimeout(() => {
+                loadingText.style.opacity = '1';
+            }, 50);
+
+            // Setelah 1.5 detik, hilangkan seluruh loading screen
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 1500);
+        }, 900); // Jeda 900ms agar loading awal terlihat sebentar
     }
 });
 
@@ -1110,6 +1132,27 @@ if (clearStickersBtn) {
         clearStickersBtn.textContent = '✅ Bersih!';
         setTimeout(() => {
             clearStickersBtn.textContent = '🧹 Bersihkan Stiker';
+        }, 1000);
+    });
+}
+
+// ========================================
+// CLEAR PHOTO STICKERS BUTTON
+// ========================================
+const clearPhotoStickersBtn = document.getElementById('clear-photo-stickers-btn');
+if (clearPhotoStickersBtn) {
+    clearPhotoStickersBtn.addEventListener('click', () => {
+        const container = document.getElementById('photo-stickers');
+        if (!container) return;
+
+        // Hapus semua elemen di dalam photo-stickers
+        const stickers = container.querySelectorAll('.photo-sticker');
+        stickers.forEach(el => el.remove());
+
+        // Feedback tombol sebentar
+        clearPhotoStickersBtn.textContent = '✅ Bersih!';
+        setTimeout(() => {
+            clearPhotoStickersBtn.textContent = '🧹 Bersihkan Semua Stiker';
         }, 1000);
     });
 }
