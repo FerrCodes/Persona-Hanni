@@ -1093,3 +1093,23 @@ window.addEventListener('load', function() {
     }
 });
 
+// ========================================
+// CLEAR STICKERS BUTTON
+// ========================================
+const clearStickersBtn = document.getElementById('clear-stickers-btn');
+if (clearStickersBtn) {
+    clearStickersBtn.addEventListener('click', () => {
+        const canvas = document.querySelector('.sticker-canvas');
+        if (!canvas) return;
+
+        // Hapus semua elemen dengan class 'sticker' di dalam canvas
+        const stickers = canvas.querySelectorAll('.sticker');
+        stickers.forEach(el => el.remove());
+
+        // Kasih efek feedback sebentar
+        clearStickersBtn.textContent = '✅ Bersih!';
+        setTimeout(() => {
+            clearStickersBtn.textContent = '🧹 Bersihkan Stiker';
+        }, 1000);
+    });
+}
