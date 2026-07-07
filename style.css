@@ -2978,7 +2978,7 @@ body.dark-mode .frame-bubble {
     body.dark-mode .sticker,
     body.dark-mode .particle {
         animation: none !important;
-        opacity: 0.2 !important;
+        opacity: 1 !important;
         transform: none !important;
         will-change: auto !important;
     }
