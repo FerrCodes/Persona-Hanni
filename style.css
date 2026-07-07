@@ -2949,7 +2949,8 @@ body.dark-mode .frame-bubble {
 
     /* Fix janky scroll on dark mode mobile */
     body.dark-mode {
-        background: #1a1a2e !important; /* SOLID, bukan gradient */
+        background: #252545 !important; /* SOLID, bukan gradient */
+        color: #ffffff !important;
         animation: none !important;
         transition: none !important;
         transform: none !important; /* Hapus translateZ */
@@ -3002,48 +3003,6 @@ body.dark-mode .frame-bubble {
         animation: none !important;
         box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
         will-change: auto !important;
-    }
-
-        /* Fix: Mode gelap di HP jadi lebih terang & kontras */
-    body.dark-mode {
-        background: #252545 !important; /* Lebih terang dari #1a1a2e */
-        color: #ffffff !important; /* Teks utama jadi putih bersih */
-    }
-
-    /* Semua teks utama jadi putih */
-    body.dark-mode .subtitle,
-    body.dark-mode .section-desc,
-    body.dark-mode .game-box p,
-    body.dark-mode .sticker-zone p,
-    body.dark-mode .control-group h3,
-    body.dark-mode .game-box h3 {
-        color: #f0f0ff !important; /* Putih kebiruan, lebih terang */
-    }
-
-    /* Judul section jadi lebih terang */
-    body.dark-mode .section-title {
-        color: #aab8ff !important; /* Biru muda terang, tidak redup */
-        text-shadow: 0 0 15px rgba(88, 101, 242, 0.5) !important;
-    }
-
-    /* Teks di kartu kepribadian */
-    body.dark-mode .trait-card h3 {
-        color: #aab8ff !important;
-    }
-    body.dark-mode .trait-card p {
-        color: #d0d0e0 !important;
-    }
-
-    /* Teks di speech bubble */
-    body.dark-mode .speech-bubble {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #3a3f6b 0%, #2a2f5a 100%) !important;
-    }
-
-    /* Badge */
-    body.dark-mode .badge {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%) !important;
     }
 }
 
