@@ -14,6 +14,12 @@
 
 <body>
 
+        <!-- Loading Spinner -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <p>Loading Fanpage...</p>
+    </div>
+
     <!-- Particles Background -->
     <div class="particles-container" id="particles"></div>
 
@@ -21,9 +27,9 @@
     <nav class="navbar">
         <div class="logo">HANNI PHAM</div>
         <div class="menu">
-            <button id="theme-selector-btn" class="pixel-btn">🎨 Themes</button>
-            <button id="mode-btn" class="pixel-btn">💕 Cozy</button>
-            <button id="dark-mode-btn" class="pixel-btn">🌙 Dark</button>
+            <button id="theme-selector-btn" class="pixel-btn" aria-label="Open theme selector">🎨 Themes</button>
+            <button id="mode-btn" class="pixel-btn" aria-label="Switch to cozy mode">💕 Cozy</button>
+            <button id="dark-mode-btn" class="pixel-btn" aria-label="Switch to dark mode">🌙 Dark</button>
         </div>
     </nav>
 
@@ -80,11 +86,11 @@
             <!-- Music Player -->
             <div class="music-player-real">
                 <audio id="bg-music" loop preload="metadata">
-                    <source src="assets/music/darling darling by newjeans’ hanni.mp3" type="audio/mpeg">
+                    <source src="assets/music/darling-cover.mp3" type="audio/mpeg">
                 </audio>
 
                 <div class="player-controls">
-                    <button id="play-pause-btn" class="control-btn" title="Play/Pause">▶</button>
+                    <button id="play-pause-btn" class="control-btn" aria-label="Play or pause music">▶</button>
 
                     <div class="track-info-real">
                         <span class="scrolling-text">🎵 Darling - cover by Hanni 🎵</span>
@@ -223,7 +229,7 @@
                     </div>
                 </div>
 
-                <button id="download-photo" class="pixel-btn">📥 Download</button>
+                <button id="download-photo" class="pixel-btn" aria-label="Download photo">📥 Download</button>
             </div>
         </div>
     </section>
@@ -239,7 +245,7 @@
             <div class="bunny-game-container">
                 <canvas id="bunny-game" width="600" height="300"></canvas>
                 <div class="game-controls">
-                    <button id="start-bunny-game" class="pixel-btn">🎮 Start</button>
+                    <button id="start-bunny-game" class="pixel-btn" aria-label="Start bunny game">🎮 Start</button>
                     <div class="game-score">Score: <span id="bunny-score">0</span></div>
                     <div class="game-high-score">High: <span id="bunny-high-score">0</span></div>
                 </div>
@@ -253,7 +259,7 @@
             <div class="memory-game-container">
                 <div class="memory-grid" id="memory-grid"></div>
                 <div class="game-controls">
-                    <button id="start-memory-game" class="pixel-btn">🎮 New Game</button>
+                    <button id="start-memory-game" class="pixel-btn" aria-label="Start memory game">🎮 New Game</button>
                     <div class="game-score">Moves: <span id="memory-moves">0</span></div>
                     <div class="game-timer">Time: <span id="memory-time">0</span>s</div>
                 </div>
@@ -273,6 +279,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Footer -->
     <footer>

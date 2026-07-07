@@ -149,20 +149,16 @@ body {
     }
 
     /* Disable complex shadows */
-    .trait-card,
-    .favorite-card,
-    .wallpaper-card {
+    .trait-card {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
     }
 
     /* Pause animations when not in view */
-    .trait-card,
-    .favorite-card {
+    .trait-card {
         animation-play-state: paused;
     }
 
-    .trait-card:hover,
-    .favorite-card:hover {
+    .trait-card:hover {
         animation-play-state: running;
     }
 }
@@ -212,15 +208,13 @@ img[loading="lazy"].loaded {
 
     /* Remove hover effects on touch devices */
     .pixel-btn:hover,
-    .trait-card:hover,
-    .favorite-card:hover {
+    .trait-card:hover {
         transform: none !important;
     }
 
     /* Add tap feedback instead */
     .pixel-btn:active,
-    .trait-card:active,
-    .favorite-card:active {
+    .trait-card:active {
         transform: scale(0.95) !important;
     }
 }
@@ -341,6 +335,24 @@ body.dark-mode .pixel-btn:hover {
 body.dark-mode {
     background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%) !important;
     color: #e4e4e4;
+        /* Perbaiki kontras teks kecil */
+    .track-info-real {
+        color: #e4e4e4 !important;
+        background: rgba(44, 47, 72, 0.9) !important;
+    }
+    .placeholder-text {
+        color: #7289DA !important;
+        opacity: 0.6 !important;
+    }
+    .game-score, .game-high-score, .game-timer {
+        color: #b9bbbe !important;
+    }
+    .section-desc {
+        color: #b9bbbe !important;
+    }
+    .sticker-zone p {
+        color: #b9bbbe !important;
+    }
 }
 
 /* Dark Mode Buttons */
@@ -418,11 +430,7 @@ body.dark-mode .hero h1 {
     }
 
     /* Reduce glow effects on dark mode mobile */
-    body.dark-mode .game-box,
-    body.dark-mode .message-input-area,
-    body.dark-mode .messages-display,
-    body.dark-mode .profile-card,
-    body.dark-mode .wallpaper-card {
+    body.dark-mode .game-box {
         box-shadow: 0 4px 10px rgba(88, 101, 242, 0.2) !important;
         /* Simpler shadow */
     }
@@ -626,101 +634,6 @@ body.dark-mode .hero h1 {
     max-width: 500px;
     position: relative;
     z-index: 2;
-}
-
-/* Greeting Card */
-.greeting-card {
-    background: linear-gradient(135deg, white, var(--theme-primary));
-    border: 3px solid #000;
-    border-radius: 20px;
-    padding: 15px 30px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
-    animation: greeting-pulse 3s ease-in-out infinite;
-}
-
-.greeting-icon {
-    font-size: 2rem;
-    animation: wave 1s ease-in-out infinite;
-}
-
-@keyframes wave {
-
-    0%,
-    100% {
-        transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(20deg);
-    }
-
-    75% {
-        transform: rotate(-20deg);
-    }
-}
-
-.greeting-text {
-    font-family: var(--font-main);
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text);
-}
-
-@keyframes greeting-pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-/* Fact Carousel */
-.fact-carousel {
-    margin-top: 20px;
-}
-
-.fact-card {
-    background: white;
-    border: 3px solid #000;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 4px 4px 0px var(--theme-accent);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    animation: fact-slide-in 0.6s ease-out;
-}
-
-.fact-icon {
-    font-size: 2rem;
-    animation: bounce 2s infinite;
-}
-
-.fact-text {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.5;
-}
-
-@keyframes fact-slide-in {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .badge {
@@ -1639,43 +1552,6 @@ body.potato-mode .game-container h2 {
     text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
 }
 
-body.potato-mode .fortune-paper {
-    background: linear-gradient(135deg, #FFF9E6 0%, #FFE4E1 100%);
-    border: 3px solid #FFB6C1;
-    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
-}
-
-body.potato-mode .bread-game-section {
-    background: linear-gradient(135deg, #FFF5E4 0%, #FFE4E1 100%);
-}
-
-body.potato-mode .bread-btn {
-    filter: drop-shadow(0 10px 20px rgba(255, 182, 193, 0.4));
-    transition: all 0.2s;
-}
-
-body.potato-mode .bread-btn:hover {
-    filter: drop-shadow(0 15px 30px rgba(255, 182, 193, 0.6));
-}
-
-body.potato-mode .bread-count-big {
-    color: #FF69B4;
-    text-shadow:
-        2px 2px 0px #FFE4E1,
-        4px 4px 10px rgba(255, 182, 193, 0.3);
-}
-
-body.potato-mode .upgrade-btn {
-    background: linear-gradient(135deg, #FFE4E1 0%, #E6E6FA 100%);
-    border: 3px solid #FFB6C1;
-    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
-}
-
-body.potato-mode .upgrade-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #FFB6C1 0%, #DDA0DD 100%);
-    box-shadow: 0 8px 25px rgba(255, 182, 193, 0.5);
-}
-
 /* Photo Booth in Cozy Mode */
 body.potato-mode .photo-booth-section {
     background: linear-gradient(135deg, #FFF5E4 0%, #FFE4E1 50%, #E6E6FA 100%);
@@ -1781,11 +1657,6 @@ button,
 /* ========================================= */
 /* --- DARK MODE (Comfortable & Elegant) --- */
 /* ========================================= */
-
-body.dark-mode {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    color: #e4e4e4;
-}
 
 /* Navbar Dark */
 body.dark-mode .navbar {
@@ -2018,65 +1889,7 @@ body.dark-mode .game-container p {
     color: #b9bbbe;
 }
 
-body.dark-mode .fortune-desc,
 body.dark-mode .booth-desc {
-    color: #b9bbbe;
-}
-
-body.dark-mode .fortune-paper {
-    background: linear-gradient(135deg, #2c2f48 0%, #1a1a2e 100%);
-    border: 2px solid #5865F2;
-    color: #e4e4e4;
-    box-shadow: 0 5px 20px rgba(88, 101, 242, 0.3);
-}
-
-body.dark-mode .fortune-stats {
-    color: #b9bbbe;
-}
-
-/* Bread Game Dark */
-body.dark-mode .bread-game-section {
-    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
-}
-
-body.dark-mode .bread-count-big {
-    color: #7289DA;
-    text-shadow:
-        0 0 20px rgba(114, 137, 218, 0.8),
-        3px 3px 0px rgba(15, 52, 96, 0.5);
-}
-
-body.dark-mode .bread-label {
-    color: #b9bbbe;
-}
-
-body.dark-mode .bread-btn {
-    filter: drop-shadow(0 10px 30px rgba(88, 101, 242, 0.5));
-}
-
-body.dark-mode .stat-item {
-    background: linear-gradient(135deg, #2c2f48 0%, #1a1a2e 100%);
-    border: 2px solid #5865F2;
-    color: #e4e4e4;
-}
-
-body.dark-mode .upgrade-btn {
-    background: linear-gradient(135deg, #2c2f48 0%, #1a1a2e 100%);
-    border: 2px solid #5865F2;
-    color: #e4e4e4;
-    box-shadow: 0 5px 20px rgba(88, 101, 242, 0.3);
-}
-
-body.dark-mode .upgrade-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
-    box-shadow: 0 8px 30px rgba(88, 101, 242, 0.6);
-}
-
-body.dark-mode .upgrade-name {
-    color: #7289DA;
-}
-
-body.dark-mode .upgrade-cost {
     color: #b9bbbe;
 }
 
@@ -2190,11 +2003,7 @@ body.dark-mode::after {
     .sticker-zone,
     .game-section,
     .photo-booth-section,
-    .quote-section,
-    .message-board-section,
-    .mini-games-section,
-    .wallpaper-section,
-    .profile-section {
+    .mini-games-section {
         width: 100% !important;
         max-width: 100vw !important;
         padding-left: 15px !important;
@@ -2205,9 +2014,7 @@ body.dark-mode::after {
     /* Fix containers */
     .hero-content,
     .game-container,
-    .photo-booth-container,
-    .message-board-container,
-    .profile-container {
+    .photo-booth-container {
         width: 100% !important;
         max-width: 100% !important;
         padding-left: 10px !important;
@@ -2243,9 +2050,7 @@ body.dark-mode::after {
         height: 250px;
         max-width: 90vw;
         max-height: 90vw;
-        /* ✅ Maintain aspect ratio! */
         object-fit: cover;
-        /* ✅ Prevent stretching! */
     }
 
     .navbar {
@@ -2313,14 +2118,6 @@ body.dark-mode::after {
         padding: 15px !important;
     }
 
-    .bread-btn {
-        font-size: 5rem;
-    }
-
-    .bread-count-big {
-        font-size: 2.5rem;
-    }
-
     /* Fix game containers */
     .game-box {
         width: 100% !important;
@@ -2361,7 +2158,6 @@ body.dark-mode::after {
     .frame-btn,
     .filter-btn,
     .add-sticker-btn,
-    .upgrade-btn,
     .theme-card {
         font-size: 0.7rem !important;
         padding: 8px !important;
@@ -2379,44 +2175,6 @@ body.dark-mode::after {
     .theme-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 10px !important;
-    }
-
-    /* Fix wallpaper grid */
-    .wallpaper-grid {
-        grid-template-columns: 1fr !important;
-        padding: 0 10px !important;
-    }
-
-    .wallpaper-card {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    /* Fix message board */
-    .message-board-container {
-        grid-template-columns: 1fr !important;
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .message-input-area,
-    .messages-display {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    /* Fix profile section */
-    .profile-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 20px 15px !important;
-    }
-
-    .profile-inputs input,
-    .profile-inputs select,
-    .profile-inputs textarea {
-        width: 100% !important;
-        max-width: 100% !important;
     }
 
     /* Fix speech bubble */
@@ -2589,148 +2347,6 @@ body.dark-mode::after {
     background: linear-gradient(135deg, #FFE4B5, #FFA07A);
 }
 
-/* Quote Section */
-.quote-section {
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.quote-container {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.quote-bubble {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-    position: relative;
-}
-
-.quote-bubble::before {
-    content: '"';
-    font-size: 4rem;
-    position: absolute;
-    top: -10px;
-    left: 20px;
-    color: var(--theme-accent);
-    opacity: 0.3;
-}
-
-#quote-text {
-    font-size: 1.2rem;
-    font-style: italic;
-    color: var(--text);
-    line-height: 1.6;
-}
-
-.quote-author {
-    margin-top: 15px;
-    font-weight: bold;
-    color: var(--theme-accent);
-}
-
-/* Message Board */
-.message-board-section {
-    padding: 60px 20px;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.message-board-container {
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-}
-
-.message-input-area {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-}
-
-.message-input-area input,
-.message-input-area textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    font-family: var(--font-main);
-    font-size: 0.95rem;
-}
-
-.message-input-area textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-.message-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#char-count {
-    font-size: 0.85rem;
-    color: #999;
-}
-
-.messages-display {
-    background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.sample-message,
-.user-message {
-    background: var(--theme-primary);
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(-20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-.message-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 0.85rem;
-}
-
-.message-author {
-    font-weight: bold;
-    color: var(--theme-accent);
-}
-
-.message-time {
-    color: #999;
-}
-
-.message-content {
-    color: var(--text);
-    line-height: 1.5;
-}
-
 /* Mini Games Section */
 .mini-games-section {
     padding: 60px 20px;
@@ -2875,111 +2491,6 @@ body.dark-mode::after {
     transform: none;
 }
 
-/* Wallpaper Gallery */
-.wallpaper-section {
-    padding: 60px 20px;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.section-desc {
-    text-align: center;
-    color: var(--text);
-    margin-bottom: 30px;
-}
-
-.wallpaper-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.wallpaper-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-.wallpaper-card:hover {
-    transform: translateY(-10px);
-}
-
-.wallpaper-card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-}
-
-.download-wallpaper-btn {
-    width: 100%;
-    padding: 15px;
-    background: var(--theme-accent);
-    color: white;
-    border: none;
-    font-family: var(--font-pixel);
-    font-size: 0.7rem;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.download-wallpaper-btn:hover {
-    background: var(--theme-secondary);
-}
-
-/* Profile Section */
-.profile-section {
-    padding: 60px 20px;
-}
-
-.profile-container {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.profile-card {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-}
-
-.profile-card h3 {
-    color: var(--theme-accent);
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.profile-card h4 {
-    text-align: center;
-}
-
-.profile-inputs input,
-.profile-inputs select,
-.profile-inputs textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    font-family: var(--font-main);
-    font-size: 0.95rem;
-}
-
-.profile-card-display {
-    background: var(--theme-primary);
-    padding: 20px;
-    border-radius: 15px;
-    margin: 15px 0;
-}
-
-.profile-card-display p {
-    margin: 10px 0;
-    color: var(--text);
-}
-
 /* ===== DARK MODE FOR NEW FEATURES ===== */
 
 /* Theme Modal Dark */
@@ -3021,82 +2532,6 @@ body.dark-mode .theme-card:hover {
 body.dark-mode .theme-card.active {
     border-color: #7289DA;
     box-shadow: 0 10px 30px rgba(114, 137, 218, 0.6);
-}
-
-/* Quote Section Dark */
-body.dark-mode .quote-section {
-    background: radial-gradient(circle at 50% 50%, rgba(88, 101, 242, 0.1) 0%, transparent 70%);
-}
-
-body.dark-mode .quote-bubble {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border: 3px solid #5865F2;
-    box-shadow: 0 10px 40px rgba(88, 101, 242, 0.4);
-}
-
-body.dark-mode .quote-bubble::before {
-    color: #5865F2;
-}
-
-body.dark-mode #quote-text {
-    color: #e4e4e4;
-}
-
-body.dark-mode .quote-author {
-    color: #7289DA;
-}
-
-/* Message Board Dark */
-body.dark-mode .message-board-section {
-    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-}
-
-body.dark-mode .message-input-area {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border: 3px solid #5865F2;
-    box-shadow: 0 10px 40px rgba(88, 101, 242, 0.4);
-}
-
-body.dark-mode .message-input-area input,
-body.dark-mode .message-input-area textarea {
-    background: #2c2f48;
-    border: 2px solid #5865F2;
-    color: #e4e4e4;
-}
-
-body.dark-mode .message-input-area input::placeholder,
-body.dark-mode .message-input-area textarea::placeholder {
-    color: #7289DA;
-    opacity: 0.6;
-}
-
-body.dark-mode #char-count {
-    color: #7289DA;
-}
-
-body.dark-mode .messages-display {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border: 3px solid #5865F2;
-    box-shadow: 0 10px 40px rgba(88, 101, 242, 0.4);
-}
-
-body.dark-mode .sample-message,
-body.dark-mode .user-message {
-    background: linear-gradient(135deg, #2c2f48 0%, #1a1a2e 100%);
-    border: 2px solid #5865F2;
-}
-
-body.dark-mode .message-author {
-    color: #7289DA;
-}
-
-body.dark-mode .message-time {
-    color: #7289DA;
-    opacity: 0.6;
-}
-
-body.dark-mode .message-content {
-    color: #e4e4e4;
 }
 
 /* Mini Games Section Dark */
@@ -3171,359 +2606,49 @@ body.dark-mode .puzzle-tile.empty {
     border: 3px dashed #5865F2;
 }
 
-/* Wallpaper Gallery Dark */
-body.dark-mode .wallpaper-section {
-    background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);
-}
-
-body.dark-mode .section-desc {
-    color: #b9bbbe;
-}
-
-body.dark-mode .wallpaper-card {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border: 3px solid #5865F2;
-    box-shadow: 0 10px 40px rgba(88, 101, 242, 0.4);
-}
-
-body.dark-mode .wallpaper-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 50px rgba(88, 101, 242, 0.6);
-}
-
-body.dark-mode .wallpaper-card img {
-    border-bottom: 2px solid #5865F2;
-}
-
-body.dark-mode .download-wallpaper-btn {
-    background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
-    border-top: 2px solid #5865F2;
-}
-
-body.dark-mode .download-wallpaper-btn:hover {
-    background: linear-gradient(135deg, #7289DA 0%, #5865F2 100%);
-    box-shadow: 0 5px 20px rgba(88, 101, 242, 0.5);
-}
-
-/* Profile Section Dark */
-body.dark-mode .profile-section {
-    background: radial-gradient(circle at 50% 50%, rgba(88, 101, 242, 0.1) 0%, transparent 70%);
-}
-
-body.dark-mode .profile-card {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border: 3px solid #5865F2;
-    box-shadow:
-        0 10px 40px rgba(88, 101, 242, 0.4),
-        inset 0 1px 0 rgba(88, 101, 242, 0.2);
-}
-
 /* ========================================
-   FAVORITES SECTION - HANNI'S FAVORITE THINGS
+   LOADING SPINNER
    ======================================== */
-.favorites-section {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-bg) 100%);
-}
-
-.favorites-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.favorite-card {
-    background: white;
-    border-radius: 25px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.favorite-card::before {
-    content: '';
-    position: absolute;
+#loading-screen {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--theme-accent) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.favorite-card:hover::before {
-    opacity: 0.1;
-}
-
-.favorite-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 15px 50px rgba(255, 158, 201, 0.3);
-}
-
-.favorite-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite;
-}
-
-.favorite-card h3 {
-    font-size: 1.8rem;
-    color: var(--theme-accent);
-    margin-bottom: 15px;
-    font-weight: 700;
-}
-
-.favorite-detail {
-    font-size: 1rem;
-    color: var(--text);
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-.favorite-extra {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 2px dashed var(--theme-secondary);
-}
-
-.love-meter {
-    display: block;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-}
-
-.favorite-extra small {
-    display: block;
-    font-size: 0.9rem;
-    color: var(--theme-accent);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* ========================================
-   MOOD SECTION - HANNI MOOD TRACKER
-   ======================================== */
-.mood-section {
-    padding: 80px 20px;
     background: var(--theme-bg);
-}
-
-.mood-selector {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.mood-btn {
-    background: white;
-    border: 3px solid var(--theme-secondary);
-    border-radius: 20px;
-    padding: 25px 15px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-    overflow: hidden;
-}
-
-.mood-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: var(--theme-accent);
-    opacity: 0.2;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s, height 0.4s;
-}
-
-.mood-btn:hover::before {
-    width: 200%;
-    height: 200%;
-}
-
-.mood-btn:hover {
-    transform: translateY(-5px) scale(1.05);
-    border-color: var(--theme-accent);
-    box-shadow: 0 10px 30px rgba(255, 158, 201, 0.3);
-}
-
-.mood-btn.active {
-    background: linear-gradient(135deg, var(--theme-accent), var(--theme-secondary));
-    border-color: var(--theme-accent);
-    transform: scale(1.1);
-}
-
-.mood-emoji {
-    font-size: 3rem;
-    position: relative;
-    z-index: 1;
-}
-
-.mood-label {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-    position: relative;
-    z-index: 1;
-}
-
-.mood-btn.active .mood-label {
-    color: white;
-}
-
-.mood-display {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.mood-message {
-    background: white;
-    border-radius: 25px;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    min-height: 150px;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    animation: fadeIn 0.5s;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
-.mood-message p {
-    font-size: 1.3rem;
-    line-height: 1.8;
+#loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid var(--theme-secondary);
+    border-top: 6px solid var(--theme-accent);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#loading-screen p {
+    margin-top: 20px;
+    font-family: var(--font-hand);
+    font-size: 1.2rem;
     color: var(--text);
-    font-weight: 500;
-}
-
-/* Dark Mode untuk Favorites & Mood */
-body.dark-mode .favorite-card,
-body.dark-mode .mood-message {
-    background: linear-gradient(135deg, #1e1e3f 0%, #2c2f48 100%);
-    border: 2px solid #5865F2;
-    box-shadow:
-        0 10px 40px rgba(88, 101, 242, 0.4),
-        inset 0 1px 0 rgba(88, 101, 242, 0.2);
-}
-
-body.dark-mode .favorite-card h3,
-body.dark-mode .mood-message p {
-    color: #7289DA;
-    text-shadow: 0 0 20px rgba(114, 137, 218, 0.6);
-}
-
-body.dark-mode .favorite-detail,
-body.dark-mode .favorite-extra small {
-    color: #e4e4e4;
-}
-
-body.dark-mode .mood-btn {
-    background: #2c2f48;
-    border-color: #5865F2;
-}
-
-body.dark-mode .mood-btn:hover {
-    background: #3a3f5c;
-}
-
-body.dark-mode .mood-btn.active {
-    background: linear-gradient(135deg, #5865F2, #7289DA);
-}
-
-body.dark-mode .mood-label {
-    color: #e4e4e4;
-    font-weight: 600;
-}
-
-body.dark-mode .mood-btn.active .mood-label {
-    color: white;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-body.dark-mode .mood-section {
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-}
-
-body.dark-mode .section-desc {
-    color: #e4e4e4;
-}
-
-body.dark-mode .mood-emoji {
-    filter: brightness(1.2);
-}
-
-/* Dark mode untuk elemen hero baru */
-body.dark-mode .greeting-card {
-    background: linear-gradient(135deg, #2c2f48 0%, #1e1e3f 100%);
-    border-color: #5865F2;
-    box-shadow: 5px 5px 0px rgba(88, 101, 242, 0.4);
-}
-
-body.dark-mode .greeting-text {
-    color: #e4e4e4;
-    text-shadow: 0 0 10px rgba(114, 137, 218, 0.4);
-}
-
-body.dark-mode .fact-card {
-    background: linear-gradient(135deg, #2c2f48 0%, #1e1e3f 100%);
-    border-color: #5865F2;
-    box-shadow: 4px 4px 0px rgba(88, 101, 242, 0.4);
-}
-
-body.dark-mode .fact-text {
-    color: #e4e4e4;
-}
-
-/* Particles Dark Mode */
-body.dark-mode .particle {
-    filter: brightness(0.8) drop-shadow(0 0 10px rgba(88, 101, 242, 0.6));
-}
-
-/* Small mobile devices */
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 3rem !important;
-    }
-
-    .section-title {
-        font-size: 1rem;
-    }
-
-    .memory-card {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-
-    .puzzle-tile {
-        width: 60px;
-        height: 60px;
-        font-size: 1rem;
-    }
-
-    .photo-frame {
-        height: 320px;
-    }
 }
 
 /* ========================================
@@ -3575,20 +2700,6 @@ body.dark-mode .particle {
     }
 
     50% {
-        opacity: 0.8;
-    }
-}
-
-@keyframes twinkle {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.2);
         opacity: 0.8;
     }
 }
@@ -3809,124 +2920,65 @@ body.dark-mode .frame-bubble {
 
 /* ========================================
    CRITICAL FIX: DARK MODE MOBILE SCROLL PERFORMANCE
-   Ditambahkan untuk memperbaiki scroll janky di dark mode mobile
    ======================================== */
 
 @media (max-width: 768px) {
 
     /* Fix janky scroll on dark mode mobile */
     body.dark-mode {
-        /* Use solid color instead of gradient - much lighter */
-        background: #1a1a2e !important;
-        /* Remove ALL animations on dark mode mobile */
+        background: #1a1a2e !important; /* SOLID, bukan gradient */
         animation: none !important;
-        /* Disable transitions during scroll */
         transition: none !important;
-        /* Force hardware acceleration but don't reserve memory */
-        transform: translateZ(0);
-        will-change: auto;
-        /* Enable momentum scrolling on iOS */
+        transform: none !important; /* Hapus translateZ */
+        will-change: auto !important;
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Disable all complex backgrounds on dark mode mobile */
+    /* Hapus semua pseudo-elements dekoratif di dark mode */
     body.dark-mode::before,
     body.dark-mode::after {
         display: none !important;
     }
 
-    /* Simplify all shadow effects */
-    body.dark-mode * {
-        text-shadow: none !important;
-    }
-
-    body.dark-mode .hero h1 {
-        text-shadow: 2px 2px 0px #5865F2 !important;
-    }
-
-    /* Remove glow effects from cards */
+    /* Hapus semua efek bayangan dan transisi pada kartu */
     body.dark-mode .trait-card,
     body.dark-mode .game-box,
     body.dark-mode .control-group {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
-        /* Disable transform animations */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
         transform: none !important;
+        transition: none !important;
     }
 
-    body.dark-mode .trait-card:hover,
-    body.dark-mode .game-box:hover {
-        transform: none !important;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
-    }
-
-    /* Disable all floating animations on dark mode mobile */
+    /* Matikan animasi semua elemen bergerak di dark mode */
     body.dark-mode .floating-element,
-    body.dark-mode .sticker {
+    body.dark-mode .sticker,
+    body.dark-mode .particle {
         animation: none !important;
-        opacity: 0.3;
+        opacity: 0.2 !important;
+        transform: none !important;
+        will-change: auto !important;
     }
 
-    /* Simplify navbar on dark mode mobile */
+    /* Sederhanakan navbar dark mode */
     body.dark-mode .navbar {
         background: #1e1e3f !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+        transition: none !important;
     }
 
-    /* Disable image border animations */
-    body.dark-mode #hanni-img,
-    body.dark-mode .booth-img {
-        animation: none !important;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
-    }
-
-    /* Disable music player glow effects */
-    body.dark-mode .music-player-real {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    /* Disable visualizer on dark mode mobile to save CPU */
+    /* Matikan visualizer di dark mode mobile (sudah ada, tapi dipastikan) */
     body.dark-mode .visualizer {
         display: none !important;
     }
 
-    /* Simplify buttons */
-    body.dark-mode .pixel-btn {
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2) !important;
-        transition: transform 0.2s ease !important;
-    }
-
-    body.dark-mode .pixel-btn:hover {
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    /* Disable all backdrop filters - VERY EXPENSIVE */
-    body.dark-mode .control-group,
-    body.dark-mode .speech-bubble,
-    body.dark-mode .badge,
-    body.dark-mode .track-info-real {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-    }
-
-    /* Prevent layout shift during scroll */
-    body.dark-mode section {
-        contain: layout style;
-    }
-}
-
-/* Additional optimization for low-end devices */
-@media (max-width: 768px) and (max-height: 800px) {
-    body.dark-mode {
-        /* Even simpler for smaller screens */
-        background: #16213e !important;
-    }
-
-    /* Hide all decorative elements */
-    body.dark-mode .hero-decorations,
-    body.dark-mode .sticker-decorations {
-        display: none !important;
+    /* Matikan efek glow di gambar */
+    body.dark-mode #hanni-img,
+    body.dark-mode .booth-img {
+        animation: none !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        will-change: auto !important;
     }
 }
 
@@ -3935,20 +2987,19 @@ COZY MODE MOBILE PERFORMANCE FIX
 ======================================== */
 @media (max-width: 768px) {
 
-    /* 1. Ganti gradient animasi → warna solid */
     body.potato-mode {
         background: #FFF5E4 !important;
         animation: none !important;
-        transition: background 0.3s ease, color 0.3s ease !important;
+        transition: none !important;
+        transform: none !important;
+        will-change: auto !important;
     }
 
-    /* 2. Matikan pseudo-elements floating */
     body.potato-mode::before,
     body.potato-mode::after {
         display: none !important;
     }
 
-    /* 3. Hentikan SEMUA keyframes berat */
     body.potato-mode .hero h1,
     body.potato-mode #hanni-img,
     body.potato-mode .speech-bubble,
@@ -3957,19 +3008,18 @@ COZY MODE MOBILE PERFORMANCE FIX
     body.potato-mode .logo {
         animation: none !important;
         transform: none !important;
-        transition: transform 0.2s ease !important;
+        transition: none !important;
+        will-change: auto !important;
     }
 
-    /* 4. Ganti box-shadow animasi → static shadow */
     body.potato-mode #hanni-img,
     body.potato-mode .speech-bubble,
     body.potato-mode .trait-card,
     body.potato-mode .game-container,
     body.potato-mode .control-group {
-        box-shadow: 0 4px 12px rgba(255, 182, 193, 0.25) !important;
+        box-shadow: 0 2px 8px rgba(255, 182, 193, 0.15) !important;
     }
 
-    /* 5. Sederhanakan background kompleks */
     body.potato-mode .music-player-real,
     body.potato-mode .navbar,
     body.potato-mode .personality,
@@ -3979,19 +3029,16 @@ COZY MODE MOBILE PERFORMANCE FIX
         -webkit-backdrop-filter: none !important;
     }
 
-    /* 6. Optimasi hover → ganti jadi tap feedback */
     body.potato-mode .pixel-btn:active,
-    body.potato-mode .trait-card:active,
-    body.potato-mode .upgrade-btn:active {
+    body.potato-mode .trait-card:active {
         transform: scale(0.96) !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
     }
 
-    /* 7. Paksa GPU compositing hanya pada elemen yang benar-benar perlu */
     body.potato-mode .hero-image-wrapper img,
     body.potato-mode .photo-frame {
-        will-change: transform;
-        transform: translateZ(0);
-        backface-visibility: hidden;
+        will-change: auto !important;
+        transform: none !important;
+        backface-visibility: visible !important;
     }
 }

@@ -46,7 +46,7 @@ let particleCount;
 if (isLowEnd) {
     particleCount = 0;
 } else if (isMobile) {
-    particleCount = 3;
+    particleCount = 2;
 } else {
     particleCount = 8;
 }
@@ -140,16 +140,18 @@ const cards = [
 // ========================================
 if (modeBtn) {
     modeBtn.addEventListener('click', () => {
-        // Turn off dark mode if active
+        // Jika Dark Mode aktif, matikan dulu
         if (isDarkMode) {
             body.classList.remove('dark-mode');
             isDarkMode = false;
             darkModeBtn.innerText = "🌙 Dark";
         }
-        
+
+        // Toggle status Cozy
         isPotatoMode = !isPotatoMode;
         const currentState = isPotatoMode ? potatoState : normalState;
 
+        // Update class & teks tombol
         if (isPotatoMode) {
             body.classList.add('potato-mode');
             modeBtn.innerText = "✨ Idol";
@@ -158,20 +160,34 @@ if (modeBtn) {
             modeBtn.innerText = "💕 Cozy";
         }
 
-        if (heroSubtitle) heroSubtitle.innerText = currentState.subtitle;
-        if (speechBubble) speechBubble.innerText = currentState.bubble;
+        // Panggil fungsi update UI (tanpa duplikasi)
+        updateUI(currentState);
+    });
+}
 
-        cards.forEach((card, index) => {
-            if (!card) return;
-            const data = currentState.cards[index];
-            const h3 = card.querySelector('h3');
-            const p = card.querySelector('p');
-            const icon = card.querySelector('.card-icon');
-            
-            if (h3) h3.innerText = data.title;
-            if (p) p.innerText = data.text;
-            if (icon) icon.innerText = data.icon;
-        });
+// ========================================
+// UI UPDATE FUNCTION (untuk menghindari duplikasi)
+// ========================================
+function updateUI(state) {
+    // Update subtitle
+    if (heroSubtitle) heroSubtitle.innerText = state.subtitle;
+    
+    // Update speech bubble
+    if (speechBubble) speechBubble.innerText = state.bubble;
+
+    // Update 3 personality cards
+    cards.forEach((card, index) => {
+        if (!card) return;
+        const data = state.cards[index];
+        if (!data) return;
+        
+        const h3 = card.querySelector('h3');
+        const p = card.querySelector('p');
+        const icon = card.querySelector('.card-icon');
+        
+        if (h3) h3.innerText = data.title;
+        if (p) p.innerText = data.text;
+        if (icon) icon.innerText = data.icon;
     });
 }
 
@@ -180,16 +196,18 @@ if (modeBtn) {
 // ========================================
 if (darkModeBtn) {
     darkModeBtn.addEventListener('click', () => {
-        // Turn off cozy mode if active
+        // Jika Cozy Mode aktif, matikan dulu
         if (isPotatoMode) {
             body.classList.remove('potato-mode');
             isPotatoMode = false;
             modeBtn.innerText = "💕 Cozy";
         }
-        
+
+        // Toggle status Dark
         isDarkMode = !isDarkMode;
         const currentState = isDarkMode ? darkState : normalState;
 
+        // Update class & teks tombol
         if (isDarkMode) {
             body.classList.add('dark-mode');
             darkModeBtn.innerText = "☀️ Light";
@@ -198,20 +216,8 @@ if (darkModeBtn) {
             darkModeBtn.innerText = "🌙 Dark";
         }
 
-        if (heroSubtitle) heroSubtitle.innerText = currentState.subtitle;
-        if (speechBubble) speechBubble.innerText = currentState.bubble;
-
-        cards.forEach((card, index) => {
-            if (!card) return;
-            const data = currentState.cards[index];
-            const h3 = card.querySelector('h3');
-            const p = card.querySelector('p');
-            const icon = card.querySelector('.card-icon');
-            
-            if (h3) h3.innerText = data.title;
-            if (p) p.innerText = data.text;
-            if (icon) icon.innerText = data.icon;
-        });
+        // Panggil fungsi update UI (tanpa duplikasi)
+        updateUI(currentState);
     });
 }
 
@@ -546,8 +552,14 @@ const mainImg = document.getElementById('hanni-img');
 outfitBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const newSrc = btn.getAttribute('data-img');
+        if (!mainImg) return;
+
+        // 🔥 Preload gambar terlebih dahulu
+        const preloader = new Image();
+        preloader.src = newSrc;
         
-        if (mainImg) {
+        preloader.onload = () => {
+            // Saat gambar sudah siap, baru kita fade-in
             mainImg.style.opacity = "0";
             mainImg.style.transform = "scale(0.9)";
             
@@ -555,8 +567,13 @@ outfitBtns.forEach(btn => {
                 mainImg.src = newSrc;
                 mainImg.style.opacity = "1";
                 mainImg.style.transform = "scale(1)";
-            }, 200);
-        }
+            }, 150);
+        };
+
+        // Jika gagal load (misal file hilang), tetap coba tampilkan
+        preloader.onerror = () => {
+            mainImg.src = newSrc;
+        };
     });
 });
 
@@ -920,7 +937,7 @@ function initBunnyGame() {
             y: canvasHeight - 40 - height,
             width: 30,
             height: height,
-            speed: 3 + Math.floor(bunnyScore / 10)
+            speed: Math.min(8, 3 + Math.floor(bunnyScore / 10))
         });
         
         obstacleTimer = setTimeout(spawnObstacle, 2000 - Math.min(1000, bunnyScore * 50));
@@ -1063,3 +1080,16 @@ if (isMobile && 'PerformanceObserver' in window) {
         console.log('Performance monitoring not available');
     }
 }
+
+// ========================================
+// HILANGKAN LOADING SCREEN SETELAH SEMUA SIAP
+// ========================================
+window.addEventListener('load', function() {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+        }, 400); // Kasih jeda 0.4 detik biar transisi halus
+    }
+});
+
