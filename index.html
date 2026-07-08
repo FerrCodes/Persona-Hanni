@@ -163,19 +163,25 @@
         <div class="sticker-canvas">
             <div class="placeholder-text">Tap here!</div>
         </div>
-            <button id="clear-stickers-btn" class="pixel-btn" aria-label="Clear all stickers" style="margin-top: 15px;">🧹 Bersihkan Stiker</button>
+            <button id="clear-stickers-btn" class="pixel-btn" aria-label="Clear all stickers" style="margin-top: 15px;">Bersihkan Stiker</button>
     </section>
 
     <!-- Photo Booth -->
     <section class="photo-booth-section">
         <h2 class="section-title">📸 Hanni's Photo Booth</h2>
         <div class="photo-booth-container">
-            <div class="photo-frame" id="photo-frame" title="Hanni">
-                <img src="assets/img/home.jpg" alt="Hanni" id="booth-img" class="booth-img" loading="lazy">
-                <div class="frame-overlay" id="frame-overlay"></div>
-                <div class="photo-stickers" id="photo-stickers"></div>
+            <!-- WRAPPER: Frame + Panah -->
+            <div class="photo-viewer">
+                <button id="photo-prev-btn" class="photo-arrow-btn" aria-label="Previous photo">❮</button>
+                <div class="photo-frame" id="photo-frame" title="Hanni">
+                    <img src="assets/img/home.jpg" alt="Hanni" id="booth-img" class="booth-img" loading="lazy">
+                    <div class="frame-overlay" id="frame-overlay"></div>
+                    <div class="photo-stickers" id="photo-stickers"></div>
+                </div>
+                <button id="photo-next-btn" class="photo-arrow-btn" aria-label="Next photo">❯</button>
             </div>
 
+            <!-- Controls -->
             <div class="booth-controls">
                 <!-- Frames -->
                 <div class="control-group">
@@ -224,10 +230,10 @@
                         <button class="add-sticker-btn" data-sticker="💙">💙</button>
                         <button class="add-sticker-btn" data-sticker="🌸">🌸</button>
                     </div>
-                    <button id="clear-photo-stickers-btn" class="pixel-btn" aria-label="Clear all photo stickers" style="margin-top: 15px; width: 100%;">🧹 Bersihkan Semua Stiker</button>
+                    <button id="clear-photo-stickers-btn" class="pixel-btn" aria-label="Clear all photo stickers" style="margin-top: 15px; width: 100%;">Bersihkan Semua Stiker</button>
                 </div>
 
-                <button id="download-photo" class="pixel-btn" aria-label="Download photo">📥 Download</button>
+                <button id="download-photo" class="pixel-btn" aria-label="Download photo" title="Download photo">📥 Download</button>
             </div>
         </div>
     </section>
@@ -243,49 +249,51 @@
             <div class="bunny-game-container">
                 <canvas id="bunny-game" width="600" height="300"></canvas>
                 <div class="game-controls">
-                    <button id="start-bunny-game" class="pixel-btn" aria-label="Start bunny game">🎮 Start</button>
+                    <button id="start-bunny-game" class="pixel-btn" aria-label="Start bunny game">Start</button>
                     <div class="game-score">Score: <span id="bunny-score">0</span></div>
                     <div class="game-high-score">High: <span id="bunny-high-score">0</span></div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Memory Match -->
-        <div class="game-box">
-            <h3>🧠 Memory Match</h3>
-            <p>Match the pairs!</p>
-            <div class="memory-game-container">
-                <div class="memory-grid" id="memory-grid"></div>
-                <div class="game-controls">
-                    <button id="start-memory-game" class="pixel-btn" aria-label="Start memory game">🎮 New Game</button>
-                    <div class="game-score">Moves: <span id="memory-moves">0</span></div>
-                    <div class="game-timer">Time: <span id="memory-time">0</span>s</div>
-                </div>
-            </div>
+    <!-- Hanni's Playlist -->
+    <section class="playlist-section">
+        <h2 class="section-title">🎵 A Song for Hanni</h2>
+        <p class="section-desc-info">Lagu dibawah ini adalah lagu yang menurutku paling cocok dengan vibe dan kepribadian dia</p>
+
+        <div class="playlist-grid" id="playlist-grid">
+            <!-- Isi dari JavaScript -->
         </div>
-
-        <!-- Slide Puzzle -->
-        <div class="game-box">
-            <h3>🧩 Slide Puzzle</h3>
-            <p>Solve by sliding tiles!</p>
-            <div class="puzzle-game-container">
-                <div class="puzzle-grid" id="puzzle-grid"></div>
-                <div class="game-controls">
-                    <button id="start-puzzle-game" class="pixel-btn">🎮 Shuffle</button>
-                    <div class="game-score">Moves: <span id="puzzle-moves">0</span></div>
-                </div>
-            </div>
+        <div class="playlist-footer">
+            <a href="https://open.spotify.com/playlist/4UWKGdu7BLU9AKORv95TYb?si=4beb4ac6961a4717&pt=15e369cd6100c965d8e02be45abddead" target="_blank" class="pixel-btn" id="playlist-link-btn">Lihat playlist</a>
+            <p class="playlist-credit">playlist by Feri</p>
         </div>
     </section>
 
-
     <!-- Footer -->
     <footer>
-        <p>Designed for Bunnies 🐇 | Feri | 2025 Edition</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-icon">🐰</span>
+                <span class="footer-name">Feri</span>
+            </div>
+            <p class="footer-text">
+                Designed with 💕 for Bunnies &amp; Hanni
+            </p>
+            <div class="footer-social">
+                <a href="#" class="social-link" aria-label="Instagram">📸</a>
+                <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+                <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+                <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+            </div>
+            <p class="footer-copy">
+                &copy; 2025 Feri · All rights reserved
+            </p>
+        </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
-
 </html>

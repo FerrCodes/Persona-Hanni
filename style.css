@@ -248,8 +248,12 @@ img[loading="lazy"].loaded {
     font-size: 0.6rem;
     cursor: pointer;
     box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), 
+    background 0.3s ease, 
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
     border-radius: 8px;
+    will-change: transform;
 }
 
 .pixel-btn:hover {
@@ -376,7 +380,13 @@ img[loading="lazy"].loaded {
     object-fit: cover;
     border-radius: 50%;
     border: 5px solid var(--theme-accent);
-    transition: all 0.5s;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+#hanni-img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 30px var(--theme-accent), 0 0 60px var(--theme-secondary);
+    border-color: var(--theme-primary);
 }
 
 .speech-bubble {
@@ -416,10 +426,13 @@ img[loading="lazy"].loaded {
     background: var(--theme-secondary);
     cursor: pointer;
     font-size: 1.2rem;
-    transition: transform 0.2s, background 0.2s;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), 
+    background 0.3s ease,
+    box-shadow 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    will-change: transform;
 }
 
 .outfit-btn:hover {
@@ -550,10 +563,18 @@ body.potato-mode .control-btn {
 
 .section-title {
     font-family: var(--font-pixel);
-    margin-bottom: 40px;
+    margin-bottom: 20px;    
     color: var(--theme-accent);
     text-align: center;
     font-size: 1.5rem;
+}
+
+.section-desc-info {
+    font-family: var(--font-main);
+    margin-bottom: 40px;
+    color: var(--text);
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 .traits-container {
@@ -856,16 +877,54 @@ body.potato-mode .control-btn {
 .frame-bubble::after { content: '🫧 🫧 🫧'; position: absolute; bottom: 15px; right: 15px; font-size: 1.5rem; z-index: 3; animation: float 3s ease-in-out infinite 1s; }
 @keyframes bubbleFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
 
-/* Filter Effects */
-.filter-vintage { filter: sepia(0.4) contrast(1.1) brightness(0.95) saturate(0.8); }
-.filter-warm { filter: saturate(1.2) contrast(1.05) hue-rotate(-10deg) brightness(1.1); }
-.filter-cool { filter: saturate(1.1) contrast(1.05) hue-rotate(10deg) brightness(0.95); }
-.filter-dream { filter: brightness(1.08) contrast(0.95) saturate(1.2) blur(0.3px); }
-.filter-pastel { filter: saturate(0.7) brightness(1.15) contrast(0.9) hue-rotate(5deg); }
-.filter-mocha { filter: sepia(0.3) saturate(1.1) contrast(1.05) brightness(0.98) hue-rotate(-5deg); }
-.filter-neon { filter: saturate(1.8) contrast(1.3) brightness(1.05) hue-rotate(-15deg); }
-.filter-glow { filter: brightness(1.2) saturate(1.3) contrast(0.9) blur(0.5px); }
-.filter-aesthetic { filter: saturate(0.85) brightness(1.12) contrast(0.95) sepia(0.1); }
+/* ========================================
+   FILTER EFFECTS - PHOTO BOOTH (FINAL)
+   ======================================== */
+
+/* Vintage: efek foto jadul, hangat, sedikit pudar */
+.filter-vintage {
+    filter: sepia(0.6) contrast(0.9) brightness(0.95) saturate(0.7) hue-rotate(-5deg);
+}
+
+/* Warm: warna lebih hangat, seperti golden hour */
+.filter-warm {
+    filter: saturate(1.3) contrast(1.05) hue-rotate(-12deg) brightness(1.04);
+}
+
+/* Cool: warna lebih dingin, kebiruan */
+.filter-cool {
+    filter: saturate(1.15) contrast(1.02) hue-rotate(12deg) brightness(0.96);
+}
+
+/* Dream: lembut, seperti mimpi (blur + glow) */
+.filter-dream {
+    filter: brightness(1.08) contrast(0.92) saturate(1.2) blur(0.4px);
+}
+
+/* Pastel: warna pastel, lembut, saturasi rendah */
+.filter-pastel {
+    filter: saturate(0.65) brightness(1.15) contrast(0.88) hue-rotate(3deg);
+}
+
+/* Mocha: coklat hangat, seperti kopi susu */
+.filter-mocha {
+    filter: sepia(0.45) saturate(1.1) contrast(1.05) brightness(0.96) hue-rotate(-8deg);
+}
+
+/* Neon: warna menyala, tapi tetap elegan — TIDAK BERLEBIHAN! */
+.filter-neon {
+    filter: saturate(1.5) contrast(1.15) brightness(1.02) hue-rotate(-12deg);
+}
+
+/* Soft Glow: efek bercahaya, cocok untuk potret */
+.filter-glow {
+    filter: brightness(1.2) saturate(1.3) contrast(0.88) blur(0.25px);
+}
+
+/* Aesthetic: gaya indie, sedikit retro */
+.filter-aesthetic {
+    filter: saturate(0.85) contrast(1.1) brightness(1.05) sepia(0.15) hue-rotate(-6deg);
+}
 
 /* ========================================
    GAME SECTION
@@ -1119,14 +1178,157 @@ body.potato-mode .control-btn {
 }
 
 /* ========================================
-   FOOTER
+   FOOTER (ELEGAN & INTERAKTIF)
    ======================================== */
 footer {
+    background: linear-gradient(135deg, #f8f0f5 0%, #fce4ec 100%);
+    padding: 40px 20px 30px;
     text-align: center;
-    padding: 30px;
-    font-size: 0.8rem;
-    background: var(--text);
+    border-top: 3px solid var(--theme-secondary);
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.footer-icon {
+    font-size: 1.8rem;
+    animation: gentleFloat 3s ease-in-out infinite;
+}
+
+.footer-name {
+    font-family: var(--font-hand);
+    color: var(--theme-accent);
+}
+
+.footer-text {
+    font-family: var(--font-hand);
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid var(--theme-secondary);
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.social-link:hover {
+    transform: translateY(-4px) scale(1.1);
+    background: var(--theme-accent);
+    border-color: var(--theme-accent);
     color: white;
+    box-shadow: 0 6px 20px rgba(255, 158, 201, 0.4);
+}
+
+.footer-copy {
+    font-size: 0.75rem;
+    color: #999;
+    letter-spacing: 0.3px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 14px;
+    margin-top: 4px;
+}
+
+/* ===== DARK MODE ===== */
+body.dark-mode footer {
+    background: linear-gradient(135deg, #0c0c1e 0%, #1a1a2e 100%);
+    border-top-color: rgba(192, 132, 252, 0.3);
+}
+body.dark-mode .footer-name {
+    color: #c084fc;
+}
+body.dark-mode .footer-text {
+    color: #d1d5db;
+}
+body.dark-mode .social-link {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(192, 132, 252, 0.3);
+    color: #e2e8f0;
+}
+body.dark-mode .social-link:hover {
+    background: rgba(192, 132, 252, 0.3);
+    border-color: #c084fc;
+    color: #ffffff;
+}
+body.dark-mode .footer-copy {
+    color: #6b7280;
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===== COZY MODE ===== */
+body.potato-mode footer {
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe8e0 100%);
+    border-top-color: #FFB6C1;
+}
+body.potato-mode .footer-name {
+    color: #FF69B4;
+}
+body.potato-mode .social-link {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: #FFB6C1;
+    color: #5D4037;
+}
+body.potato-mode .social-link:hover {
+    background: #FFB6C1;
+    border-color: #FF69B4;
+    color: white;
+}
+
+/* Animasi ikon kelinci */
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .footer-brand {
+        font-size: 1.1rem;
+    }
+    .footer-text {
+        font-size: 0.95rem;
+    }
+    .social-link {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+    .footer-copy {
+        font-size: 0.7rem;
+    }
 }
 
 /* ========================================
@@ -1305,12 +1507,6 @@ body.potato-mode .filter-btn.active {
     box-shadow: 0 5px 20px rgba(255, 105, 180, 0.5);
 }
 
-body.potato-mode footer {
-    background: linear-gradient(135deg, #FFB6C1 0%, #DDA0DD 100%);
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
 body.potato-mode::before {
     content: '💕';
     position: fixed;
@@ -1346,6 +1542,10 @@ body.potato-mode::after {
 body.dark-mode {
     background: linear-gradient(145deg, #0c0c1e 0%, #1a1a2e 100%) !important;
     color: #e2e8f0 !important;
+}
+
+body.dark-mode .section-desc-info {
+    color: #d1d5db; /* abu muda, cocok di dark */
 }
 
 /* ===== PERBAIKAN DARK MODE UNTUK OUTFIT & SPEECH BUBBLE ===== */
@@ -1619,11 +1819,6 @@ body.dark-mode .theme-card.active {
     box-shadow: 0 0 30px rgba(192, 132, 252, 0.2) !important;
 }
 
-body.dark-mode footer {
-    background: rgba(12, 12, 30, 0.9) !important;
-    border-top: 1px solid rgba(192, 132, 252, 0.1) !important;
-    color: #d1d5db !important;
-}
 body.dark-mode #clear-stickers-btn {
     background: rgba(192, 132, 252, 0.15) !important;
     border: 1px solid rgba(192, 132, 252, 0.3) !important;
@@ -1686,6 +1881,148 @@ body.dark-mode .frame-bubble {
 }
 
 /* ========================================
+   HANNI'S PLAYLIST
+   ======================================== */
+.playlist-section {
+    padding: 60px 20px;
+    background: var(--theme-bg);
+    text-align: center;
+}
+
+.playlist-grid {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: background 0.25s ease, transform 0.25s ease;
+    border-radius: 10px;
+    cursor: default;
+}
+
+.playlist-item:hover {
+    background: rgba(255, 158, 201, 0.08);
+    transform: translateX(4px);
+}
+
+.playlist-num {
+    font-family: var(--font-pixel);
+    font-size: 0.6rem;
+    color: var(--theme-accent);
+    width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.playlist-title {
+    font-weight: 600;
+    flex: 1;
+    text-align: left;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.playlist-artist {
+    font-size: 0.8rem;
+    color: #999;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+
+.playlist-emoji {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    width: 30px;
+    text-align: center;
+}
+
+.playlist-footer {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.playlist-footer .pixel-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 24px;
+}
+
+.playlist-credit {
+    font-size: 0.7rem;
+    color: #bbb;
+    font-family: var(--font-hand);
+    letter-spacing: 0.5px;
+}
+
+/* ===== DARK MODE ===== */
+body.dark-mode .playlist-section {
+    background: linear-gradient(145deg, #0c0c1e, #1a1a2e);
+}
+body.dark-mode .playlist-item {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+body.dark-mode .playlist-item:hover {
+    background: rgba(192, 132, 252, 0.08);
+}
+body.dark-mode .playlist-title {
+    color: #e2e8f0;
+}
+body.dark-mode .playlist-artist {
+    color: #888;
+}
+body.dark-mode .playlist-credit {
+    color: #555;
+}
+
+/* ===== COZY MODE ===== */
+body.potato-mode .playlist-section {
+    background: linear-gradient(135deg, #FFF5E4, #FFE5E5);
+}
+body.potato-mode .playlist-item {
+    border-bottom-color: rgba(255, 182, 193, 0.2);
+}
+body.potato-mode .playlist-item:hover {
+    background: rgba(255, 182, 193, 0.15);
+}
+body.potato-mode .playlist-title {
+    color: #5D4037;
+}
+body.potato-mode .playlist-artist {
+    color: #a08080;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .playlist-item {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+    .playlist-num {
+        font-size: 0.5rem;
+        width: 24px;
+    }
+    .playlist-title {
+        font-size: 0.85rem;
+    }
+    .playlist-artist {
+        font-size: 0.7rem;
+    }
+    .playlist-emoji {
+        font-size: 1.1rem;
+        width: 24px;
+    }
+}
+
+/* ========================================
    RESPONSIVE MOBILE
    ======================================== */
 @media (max-width: 768px) {
@@ -1695,7 +2032,7 @@ body.dark-mode .frame-bubble {
         max-width: 100vw !important;
     }
 
-    section, .hero, .personality, .sticker-zone, .game-section, .photo-booth-section, .mini-games-section {
+    section, .hero, .personality, .sticker-zone, .game-section, .mini-games-section {
         width: 100% !important;
         max-width: 100vw !important;
         padding-left: 15px !important;
@@ -1703,7 +2040,7 @@ body.dark-mode .frame-bubble {
         overflow-x: hidden !important;
     }
 
-    .hero-content, .game-container, .photo-booth-container {
+    .hero-content, .game-container {
         width: 100% !important;
         max-width: 100% !important;
         padding-left: 10px !important;
@@ -1772,12 +2109,6 @@ body.dark-mode .frame-bubble {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover;
-    }
-
-    .photo-booth-container {
-        flex-direction: column;
-        align-items: center;
-        width: 100% !important;
     }
     .booth-controls {
         width: 100% !important;
@@ -1964,3 +2295,310 @@ body.dark-mode .frame-bubble {
 button, .sticker-canvas {
     cursor: url('https://cur.cursors-4u.net/cursors/cur-2/cur117.cur'), pointer;
 }
+
+/* ========================================
+   PERBAIKAN: GLOW TETAP MUNCUL DI DARK & COZY MODE
+   ======================================== */
+
+/* Dark Mode - Glow tetap muncul, lebih subtle */
+body.dark-mode #hanni-img:hover {
+    transform: scale(1.04) !important;
+    box-shadow: 0 0 30px rgba(192, 132, 252, 0.6), 0 0 60px rgba(192, 132, 252, 0.3) !important;
+    border-color: #c084fc !important;
+}
+
+/* Cozy Mode - Glow tetap muncul, lebih hangat */
+body.potato-mode #hanni-img:hover {
+    transform: scale(1.04) !important;
+    box-shadow: 0 0 30px rgba(255, 182, 193, 0.6), 0 0 60px rgba(255, 182, 193, 0.3) !important;
+    border-color: #FF69B4 !important;
+}
+
+@media (max-width: 768px) {
+    /* Izinkan glow di HP, tapi versi lebih subtle */
+    body.dark-mode #hanni-img:hover {
+        box-shadow: 0 0 20px rgba(192, 132, 252, 0.4) !important;
+        transform: scale(1.02) !important;
+    }
+    body.potato-mode #hanni-img:hover {
+        box-shadow: 0 0 20px rgba(255, 182, 193, 0.4) !important;
+        transform: scale(1.02) !important;
+    }
+}
+
+/* ========================================
+   ANIMASI FADE IN SAAT HALAMAN DIMUAT
+   ======================================== */
+
+/* Target semua section utama */
+.hero,
+.personality,
+.sticker-zone,
+.photo-booth-section,
+.mini-games-section {
+    opacity: 0; /* Mulai dari tidak terlihat */
+    animation: fadeInUp 0.8s ease forwards; /* Muncul perlahan */
+}
+
+/* Efek animasinya */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px); /* Geser sedikit dari bawah */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Posisi normal */
+    }
+}
+
+@media (max-width: 768px) {
+
+    .photo-viewer {
+        max-width: 100%;
+        overflow-x: hidden;
+        gap: 6px;
+    }
+
+    .booth-controls {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 10px !important;
+        box-sizing: border-box;
+        overflow-x: hidden !important;
+    }
+
+    .control-group {
+        width: 100% !important;
+        padding: 12px !important;
+        box-sizing: border-box;
+        overflow-x: hidden !important;
+    }
+
+    /* Atur tombol frame & filter menjadi grid 3 kolom agar rapi */
+    .frame-buttons,
+    .filter-buttons,
+    .sticker-palette {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+
+    .frame-btn,
+    .filter-btn,
+    .add-sticker-btn {
+        font-size: 0.6rem !important;
+        padding: 6px 4px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Tombol download & bersihkan stiker full width */
+    #clear-photo-stickers-btn,
+    #download-photo {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+}
+
+/* Beri jeda (delay) biar muncul bergantian (bergulir) */
+.personality {
+    animation-delay: 0.1s;
+}
+.sticker-zone {
+    animation-delay: 0.2s;
+}
+.photo-booth-section {
+    animation-delay: 0.3s;
+}
+.mini-games-section {
+    animation-delay: 0.4s;
+}
+
+/* Biar Navbar dan Footer tidak kena efek ini (tetap langsung muncul) */
+.navbar,
+footer {
+    opacity: 1;
+    animation: none;
+}
+
+/* ========================================
+   PHOTO VIEWER (Frame + Arrow Buttons)
+   ======================================== */
+.photo-viewer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    flex-shrink: 0; /* agar tidak mengecil */
+}
+
+.photo-arrow-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--theme-accent);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.photo-arrow-btn:hover {
+    background: var(--theme-accent);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 158, 201, 0.4);
+}
+
+.photo-arrow-btn:active {
+    transform: scale(0.95);
+}
+
+/* Dark Mode */
+body.dark-mode .photo-arrow-btn {
+    background: rgba(30, 30, 60, 0.85);
+    border-color: rgba(192, 132, 252, 0.5);
+    color: #e2e8f0;
+}
+body.dark-mode .photo-arrow-btn:hover {
+    background: rgba(192, 132, 252, 0.3);
+    border-color: #c084fc;
+}
+
+/* Cozy Mode */
+body.potato-mode .photo-arrow-btn {
+    background: rgba(255, 245, 228, 0.9);
+    border-color: #FFB6C1;
+    color: #5D4037;
+}
+body.potato-mode .photo-arrow-btn:hover {
+    background: #FFB6C1;
+    border-color: #FF69B4;
+}
+
+/* Responsive: di HP, tombol lebih kecil */
+@media (max-width: 768px) {
+    .photo-arrow-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+    }
+    .photo-viewer {
+        gap: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .photo-arrow-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+    .photo-viewer {
+        gap: 4px;
+    }
+}
+
+/* ========================================
+   TOAST NOTIFICATION
+   ======================================== */
+.custom-toast {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-family: var(--font-hand), cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.5px;
+}
+
+.custom-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Warna berbeda untuk tipe notifikasi */
+.custom-toast.success {
+    background: rgba(34, 197, 94, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.custom-toast.error {
+    background: rgba(239, 68, 68, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.custom-toast.info {
+    background: rgba(59, 130, 246, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .custom-toast {
+        font-size: 0.8rem;
+        padding: 10px 20px;
+        top: 80px;
+        white-space: normal;
+        max-width: 90%;
+    }
+}
+
+/* Dark mode menyesuaikan */
+body.dark-mode .custom-toast {
+    background: rgba(30, 30, 60, 0.95);
+    border-color: rgba(192, 132, 252, 0.4);
+}
+body.dark-mode .custom-toast.success {
+    background: rgba(34, 197, 94, 0.8);
+}
+body.dark-mode .custom-toast.error {
+    background: rgba(239, 68, 68, 0.8);
+}
+body.dark-mode .custom-toast.info {
+    background: rgba(59, 130, 246, 0.8);
+}
+
+/* Cozy mode menyesuaikan */
+body.potato-mode .custom-toast {
+    background: rgba(255, 245, 228, 0.95);
+    color: #5D4037;
+    border-color: #FFB6C1;
+}
+body.potato-mode .custom-toast.success {
+    background: rgba(255, 182, 193, 0.9);
+}
+body.potato-mode .custom-toast.error {
+    background: rgba(255, 107, 107, 0.9);
+}
+body.potato-mode .custom-toast.info {
+    background: rgba(255, 182, 193, 0.9);
+}
+

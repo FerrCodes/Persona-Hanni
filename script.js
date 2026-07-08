@@ -154,7 +154,7 @@ if (modeBtn) {
         // Update class & teks tombol
         if (isPotatoMode) {
             body.classList.add('potato-mode');
-            modeBtn.innerText = "✨ Idol";
+            modeBtn.innerText = "✨ default";
         } else {
             body.classList.remove('potato-mode');
             modeBtn.innerText = "💕 Cozy";
@@ -277,6 +277,59 @@ frameBtns.forEach(btn => {
     });
 });
 
+// ========================================
+// PHOTO NAVIGATION (Arrow Buttons)
+// ========================================
+const photoList = [
+    'assets/img/home.jpg',
+    'assets/img/default.jpg',
+    'assets/img/hn2.jpg',
+    'assets/img/hn3.jpg',
+    'assets/img/hn22.jpg',
+];
+let currentPhotoIndex = 0;
+
+const prevBtn = document.getElementById('photo-prev-btn');
+const nextBtn = document.getElementById('photo-next-btn');
+
+function changePhoto(index) {
+    if (!boothImg) return;
+    // Loop indeks
+    if (index < 0) index = photoList.length - 1;
+    if (index >= photoList.length) index = 0;
+    currentPhotoIndex = index;
+
+    // Efek fade
+    boothImg.style.opacity = '0';
+    setTimeout(() => {
+        boothImg.src = photoList[currentPhotoIndex];
+        boothImg.style.opacity = '1';
+    }, 200);
+}
+
+if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+        changePhoto(currentPhotoIndex - 1);
+    });
+}
+
+if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+        changePhoto(currentPhotoIndex + 1);
+    });
+}
+
+// (Opsional) Keyboard support: panah kiri/kanan
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        changePhoto(currentPhotoIndex - 1);
+        e.preventDefault();
+    } else if (e.key === 'ArrowRight') {
+        changePhoto(currentPhotoIndex + 1);
+        e.preventDefault();
+    }
+});
+
 // Filter buttons
 const filterBtns = document.querySelectorAll('.filter-btn');
 filterBtns.forEach(btn => {
@@ -396,95 +449,50 @@ addStickerBtns.forEach(btn => {
 });
 
 // ========================================
-// PHOTO BOOTH DOWNLOAD (OPTIMIZED + MOBILE FALLBACK)
+// PHOTO BOOTH DOWNLOAD
 // ========================================
 const downloadPhotoBtn = document.getElementById('download-photo');
 if (downloadPhotoBtn) {
     downloadPhotoBtn.addEventListener('click', async () => {
         const photoFrame = document.getElementById('photo-frame');
-        if (!photoFrame) return alert('❌ Photo frame tidak ditemukan!');
+        if (!photoFrame) {
+            showToast('❌ Frame tidak ditemukan!', 'error');
+            return;
+        }
 
         const originalText = downloadPhotoBtn.innerText;
         downloadPhotoBtn.innerText = "⏳ Processing...";
         downloadPhotoBtn.disabled = true;
 
-        // ⚡ Smart scale berdasarkan device
-        const isMobile = window.innerWidth < 768 || navigator.hardwareConcurrency <= 4;
-        const renderScale = isMobile ? 2 : 3;
-        const timeoutMs = isMobile ? 5000 : 8000;
-
-        let timeoutId;
-        const timeoutPromise = new Promise((_, reject) => {
-            timeoutId = setTimeout(() => reject(new Error('Timeout: Render terlalu lama')), timeoutMs);
-        });
-
         try {
-            const canvas = await Promise.race([
-                html2canvas(photoFrame, {
-                    scale: renderScale,
-                    useCORS: true,
-                    allowTaint: false, // Lebih aman, hindari tainted canvas
-                    backgroundColor: null,
-                    logging: false,
-                    windowWidth: photoFrame.offsetWidth,
-                    windowHeight: photoFrame.offsetHeight,
-                    onclone: (clonedDoc) => {
-                        const clone = clonedDoc.getElementById('photo-frame');
-                        if (clone) {
-                            // 🧹 Strip CSS yang berat & sering bug di html2canvas
-                            clone.style.transform = 'none';
-                            clone.style.boxShadow = 'none';
-                            clone.style.backdropFilter = 'none';
-                            clone.style.webkitBackdropFilter = 'none';
-                            clone.style.overflow = 'visible';
-                            // Hapus animasi agar tidak freeze saat render
-                            clone.querySelectorAll('*').forEach(el => el.style.animation = 'none');
-                        }
-                    }
-                }),
-                timeoutPromise
-            ]);
+            const canvas = await html2canvas(photoFrame, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: null,
+                logging: false,
+            });
 
-            // Wrap toBlob dalam try-catch untuk tangkap SecurityError (CORS)
-            try {
-                canvas.toBlob((blob) => {
-                    clearTimeout(timeoutId);
-                    if (!blob) throw new Error('Blob generation failed');
+            canvas.toBlob((blob) => {
+                if (!blob) throw new Error('Blob gagal dibuat');
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `hanni-booth-${Date.now()}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
 
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = `hanni-booth-${Date.now()}.png`;
-                    document.body.appendChild(link);
-                    link.click();
-                    
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(url);
-                    }, 100);
-
-                    downloadPhotoBtn.innerText = "✅ Saved!";
-                }, 'image/png', 0.9); // 0.9 lebih cepat, kualitas masih sangat baik
-            } catch (blobErr) {
-                throw new Error('Canvas tainted/CORS block');
-            }
+                showToast('📸 Foto berhasil disimpan!', 'success');
+            }, 'image/png');
         } catch (error) {
-            console.warn('⚠️ html2canvas fallback triggered:', error.message);
-            showManualScreenshotGuide();
+            console.error(error);
+            showToast('❌ Gagal menyimpan. Coba screenshot manual.', 'error');
         } finally {
             downloadPhotoBtn.innerText = originalText;
             downloadPhotoBtn.disabled = false;
         }
     });
-
-    function showManualScreenshotGuide() {
-        const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const guide = isiOS 
-            ? "📱 iOS: Tekan Power + Volume Up bersamaan" 
-            : "📱 Android: Tekan Power + Volume Down bersamaan";
-        
-        alert(`⚠️ Auto-download dilewati (CORS/performa).\n\n${guide}\n💡 Tip: Pastikan foto sudah load penuh sebelum screenshot.`);
-    }
 }
 
 // ========================================
@@ -623,184 +631,6 @@ if (savedTheme) {
             card.classList.add('active');
         }
     });
-}
-
-// ========================================
-// MEMORY MATCH GAME
-// ========================================
-const memoryGrid = document.getElementById('memory-grid');
-const startMemoryBtn = document.getElementById('start-memory-game');
-const memoryMovesDisplay = document.getElementById('memory-moves');
-const memoryTimeDisplay = document.getElementById('memory-time');
-
-let memoryCards = ['🐰', '💕', '⭐', '🍞', '🎀', '💙', '🌸', '✨'];
-let memoryDeck = [...memoryCards, ...memoryCards];
-let flippedCards = [];
-let matchedPairs = 0;
-let moves = 0;
-let memoryTimer = 0;
-let memoryInterval = null;
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function createMemoryGame() {
-    if (!memoryGrid) return;
-    
-    memoryGrid.innerHTML = '';
-    memoryDeck = shuffleArray([...memoryCards, ...memoryCards]);
-    flippedCards = [];
-    matchedPairs = 0;
-    moves = 0;
-    memoryTimer = 0;
-    
-    if (memoryMovesDisplay) memoryMovesDisplay.innerText = '0';
-    if (memoryTimeDisplay) memoryTimeDisplay.innerText = '0';
-    
-    if (memoryInterval) clearInterval(memoryInterval);
-    memoryInterval = setInterval(() => {
-        memoryTimer++;
-        if (memoryTimeDisplay) memoryTimeDisplay.innerText = memoryTimer;
-    }, 1000);
-    
-    memoryDeck.forEach((symbol, index) => {
-        const card = document.createElement('div');
-        card.className = 'memory-card';
-        card.dataset.index = index;
-        card.dataset.symbol = symbol;
-        card.innerText = '?';
-        card.addEventListener('click', flipMemoryCard);
-        memoryGrid.appendChild(card);
-    });
-}
-
-function flipMemoryCard(e) {
-    const card = e.target;
-    
-    if (flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) {
-        return;
-    }
-    
-    card.classList.add('flipped');
-    card.innerText = card.dataset.symbol;
-    flippedCards.push(card);
-    
-    if (flippedCards.length === 2) {
-        moves++;
-        if (memoryMovesDisplay) memoryMovesDisplay.innerText = moves;
-        
-        setTimeout(() => {
-            if (flippedCards[0].dataset.symbol === flippedCards[1].dataset.symbol) {
-                flippedCards.forEach(c => c.classList.add('matched'));
-                matchedPairs++;
-                
-                if (matchedPairs === memoryCards.length) {
-                    if (memoryInterval) clearInterval(memoryInterval);
-                    setTimeout(() => {
-                        alert(`🎉 You won! Time: ${memoryTimer}s, Moves: ${moves}`);
-                    }, 300);
-                }
-            } else {
-                flippedCards.forEach(c => {
-                    c.classList.remove('flipped');
-                    c.innerText = '?';
-                });
-            }
-            flippedCards = [];
-        }, 800);
-    }
-}
-
-if (startMemoryBtn) {
-    startMemoryBtn.addEventListener('click', createMemoryGame);
-}
-
-// ========================================
-// SLIDE PUZZLE GAME
-// ========================================
-const puzzleGrid = document.getElementById('puzzle-grid');
-const startPuzzleBtn = document.getElementById('start-puzzle-game');
-const puzzleMovesDisplay = document.getElementById('puzzle-moves');
-
-let puzzleState = [1, 2, 3, 4, 5, 6, 7, 8, 0];
-let puzzleMoves = 0;
-
-function createPuzzle() {
-    if (!puzzleGrid) return;
-    
-    puzzleGrid.innerHTML = '';
-    puzzleMoves = 0;
-    if (puzzleMovesDisplay) puzzleMovesDisplay.innerText = '0';
-    
-    // Shuffle
-    for (let i = 0; i < 100; i++) {
-        const emptyIndex = puzzleState.indexOf(0);
-        const possibleMoves = getPossibleMoves(emptyIndex);
-        const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-        [puzzleState[emptyIndex], puzzleState[randomMove]] = [puzzleState[randomMove], puzzleState[emptyIndex]];
-    }
-    
-    renderPuzzle();
-}
-
-function getPossibleMoves(emptyIndex) {
-    const moves = [];
-    const row = Math.floor(emptyIndex / 3);
-    const col = emptyIndex % 3;
-    
-    if (row > 0) moves.push(emptyIndex - 3);
-    if (row < 2) moves.push(emptyIndex + 3);
-    if (col > 0) moves.push(emptyIndex - 1);
-    if (col < 2) moves.push(emptyIndex + 1);
-    
-    return moves;
-}
-
-function renderPuzzle() {
-    if (!puzzleGrid) return;
-    
-    puzzleGrid.innerHTML = '';
-    
-    puzzleState.forEach((num, index) => {
-        const tile = document.createElement('div');
-        tile.className = num === 0 ? 'puzzle-tile empty' : 'puzzle-tile';
-        tile.innerText = num === 0 ? '' : num;
-        tile.dataset.index = index;
-        
-        if (num !== 0) {
-            tile.addEventListener('click', () => movePuzzleTile(index));
-        }
-        
-        puzzleGrid.appendChild(tile);
-    });
-}
-
-function movePuzzleTile(tileIndex) {
-    const emptyIndex = puzzleState.indexOf(0);
-    const possibleMoves = getPossibleMoves(emptyIndex);
-    
-    if (possibleMoves.includes(tileIndex)) {
-        [puzzleState[emptyIndex], puzzleState[tileIndex]] = [puzzleState[tileIndex], puzzleState[emptyIndex]];
-        puzzleMoves++;
-        if (puzzleMovesDisplay) puzzleMovesDisplay.innerText = puzzleMoves;
-        renderPuzzle();
-        
-        const solved = puzzleState.every((num, idx) => num === idx + 1 || (idx === 8 && num === 0));
-        if (solved) {
-            setTimeout(() => {
-                alert(`🎉 Puzzle solved in ${puzzleMoves} moves!`);
-            }, 300);
-        }
-    }
-}
-
-if (startPuzzleBtn) {
-    startPuzzleBtn.addEventListener('click', createPuzzle);
 }
 
 // ========================================
@@ -1021,6 +851,34 @@ if (startBunnyBtn && bunnyGame) {
 }
 
 // ========================================
+// HANNI'S PLAYLIST
+// ========================================
+const playlistData = [
+    { title: "Right Here Waiting", artist: "Richard Marx", emoji: "⭐" },
+    { title: "clementine cover by Hanni", artist: "Hanni", emoji: "🧸" },
+    { title: "Soft", artist: "Lany", emoji: "🌷" },
+    { title: "pink", artist: "wave to earth", emoji: "🌸" },
+    { title: "favorite lesson", artist: "yaeow", emoji: "👀" },
+];
+
+const playlistGrid = document.getElementById('playlist-grid');
+
+if (playlistGrid) {
+    playlistGrid.innerHTML = '';
+    playlistData.forEach((song, index) => {
+        const item = document.createElement('div');
+        item.className = 'playlist-item';
+        item.innerHTML = `
+            <span class="playlist-num">${String(index + 1).padStart(2, '0')}</span>
+            <span class="playlist-title">${song.title}</span>
+            <span class="playlist-artist">${song.artist}</span>
+            <span class="playlist-emoji">${song.emoji}</span>
+        `;
+        playlistGrid.appendChild(item);
+    });
+}
+
+// ========================================
 // NAVBAR SCROLL BEHAVIOR
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
@@ -1110,7 +968,7 @@ window.addEventListener('load', function() {
             // Setelah 1.5 detik, hilangkan seluruh loading screen
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
-            }, 1500);
+            }, 1600);
         }, 900); // Jeda 900ms agar loading awal terlihat sebentar
     }
 });
@@ -1128,10 +986,11 @@ if (clearStickersBtn) {
         const stickers = canvas.querySelectorAll('.sticker');
         stickers.forEach(el => el.remove());
 
+        showToast('🧹 Semua stiker telah dibersihkan!', 'info');
         // Kasih efek feedback sebentar
         clearStickersBtn.textContent = '✅ Bersih!';
         setTimeout(() => {
-            clearStickersBtn.textContent = '🧹 Bersihkan Stiker';
+            clearStickersBtn.textContent = 'Bersihkan Stiker';
         }, 1000);
     });
 }
@@ -1149,10 +1008,36 @@ if (clearPhotoStickersBtn) {
         const stickers = container.querySelectorAll('.photo-sticker');
         stickers.forEach(el => el.remove());
 
+        showToast('🧹 Semua stiker telah dibersihkan!', 'info');
         // Feedback tombol sebentar
         clearPhotoStickersBtn.textContent = '✅ Bersih!';
         setTimeout(() => {
-            clearPhotoStickersBtn.textContent = '🧹 Bersihkan Semua Stiker';
+            clearPhotoStickersBtn.textContent = 'Bersihkan Semua Stiker';
         }, 1000);
     });
+}
+
+// ========================================
+// TOAST NOTIFICATION SYSTEM
+// ========================================
+function showToast(message, type = 'info') {
+    // Hapus toast lama jika ada
+    const oldToast = document.querySelector('.custom-toast');
+    if (oldToast) oldToast.remove();
+
+    const toast = document.createElement('div');
+    toast.className = `custom-toast ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Trigger muncul dengan sedikit delay biar transisi jalan
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+    });
+
+    // Hilang setelah 1.8 detik
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+    }, 1800);
 }
