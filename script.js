@@ -294,8 +294,7 @@ frameBtns.forEach(btn => {
 const photoList = [
     'assets/img/home.jpg',
     'assets/img/default.jpg',
-    'assets/img/hn2.jpg',
-    'assets/img/hn3.jpg',
+    'assets/img/hanni.jpg',
     'assets/img/hn22.jpg',
 ];
 let currentPhotoIndex = 0;
@@ -1005,6 +1004,166 @@ if (playlistGrid) {
 }
 
 // ========================================
+// DRAGGABLE BUBBLE — COMEBACK
+// ========================================
+(function() {
+    const bubble = document.getElementById('comeback-bubble');
+    if (!bubble) return;
+
+    // State
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+    let offsetX = 0, offsetY = 0;
+    const storageKey = 'bubblePosition';
+
+    // --- Load saved position ---
+    function loadPosition() {
+        try {
+            const saved = localStorage.getItem(storageKey);
+            if (saved) {
+                const pos = JSON.parse(saved);
+                // Pastikan posisi valid (tidak keluar viewport)
+                const maxX = window.innerWidth - bubble.offsetWidth;
+                const maxY = window.innerHeight - bubble.offsetHeight;
+                const left = Math.max(0, Math.min(pos.left, maxX));
+                const top = Math.max(0, Math.min(pos.top, maxY));
+                bubble.style.left = left + 'px';
+                bubble.style.top = top + 'px';
+                bubble.style.right = 'auto';
+                bubble.style.bottom = 'auto';
+                return true;
+            }
+        } catch (e) { /* ignore */ }
+        return false;
+    }
+
+    // Jika tidak ada posisi tersimpan, tetap pakai default (right: 30px; bottom: 30px;)
+    const hasSaved = loadPosition();
+
+    // --- Save position ---
+    function savePosition(left, top) {
+        try {
+            localStorage.setItem(storageKey, JSON.stringify({ left, top }));
+        } catch (e) { /* ignore */ }
+    }
+
+    // --- Boundary clamping ---
+    function clampPosition(left, top) {
+        const maxX = window.innerWidth - bubble.offsetWidth;
+        const maxY = window.innerHeight - bubble.offsetHeight;
+        return {
+            left: Math.max(0, Math.min(left, maxX)),
+            top: Math.max(0, Math.min(top, maxY))
+        };
+    }
+
+    // --- Drag Start ---
+    function onDragStart(e) {
+        // Cegah jika klik pada link atau button di dalam bubble (tidak ada di sini, tapi jaga-jaga)
+        if (e.target.closest('a, button')) return;
+
+        isDragging = true;
+        bubble.classList.add('dragging');
+
+        // Ambil posisi awal
+        const rect = bubble.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+
+        if (e.type === 'mousedown') {
+            startX = e.clientX;
+            startY = e.clientY;
+        } else if (e.type === 'touchstart') {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }
+
+        // Simpan offset untuk menghindari lompatan
+        offsetX = startX - startLeft;
+        offsetY = startY - startTop;
+
+        // Pastikan bubble menggunakan left/top
+        bubble.style.right = 'auto';
+        bubble.style.bottom = 'auto';
+        bubble.style.left = startLeft + 'px';
+        bubble.style.top = startTop + 'px';
+
+        e.preventDefault();
+    }
+
+    // --- Drag Move ---
+    function onDragMove(e) {
+        if (!isDragging) return;
+
+        let clientX, clientY;
+        if (e.type === 'mousemove') {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        } else if (e.type === 'touchmove') {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        }
+
+        let newLeft = clientX - offsetX;
+        let newTop = clientY - offsetY;
+
+        // Clamp ke viewport
+        const clamped = clampPosition(newLeft, newTop);
+        bubble.style.left = clamped.left + 'px';
+        bubble.style.top = clamped.top + 'px';
+
+        e.preventDefault();
+    }
+
+    // --- Drag End ---
+    function onDragEnd(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        bubble.classList.remove('dragging');
+
+        // Simpan posisi akhir
+        const rect = bubble.getBoundingClientRect();
+        savePosition(rect.left, rect.top);
+
+        // Kembalikan animasi float (dengan jeda kecil)
+        setTimeout(() => {
+            bubble.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+        }, 50);
+    }
+
+    // --- Window resize: adjust position agar tetap di viewport ---
+    function onResize() {
+        const rect = bubble.getBoundingClientRect();
+        const maxX = window.innerWidth - bubble.offsetWidth;
+        const maxY = window.innerHeight - bubble.offsetHeight;
+        let newLeft = Math.max(0, Math.min(rect.left, maxX));
+        let newTop = Math.max(0, Math.min(rect.top, maxY));
+        if (newLeft !== rect.left || newTop !== rect.top) {
+            bubble.style.left = newLeft + 'px';
+            bubble.style.top = newTop + 'px';
+            savePosition(newLeft, newTop);
+        }
+    }
+
+    // --- Event Listeners ---
+    // Desktop (Mouse)
+    bubble.addEventListener('mousedown', onDragStart);
+    document.addEventListener('mousemove', onDragMove);
+    document.addEventListener('mouseup', onDragEnd);
+
+    // Mobile (Touch)
+    bubble.addEventListener('touchstart', onDragStart, { passive: false });
+    document.addEventListener('touchmove', onDragMove, { passive: false });
+    document.addEventListener('touchend', onDragEnd, { passive: false });
+
+    // Window resize
+    window.addEventListener('resize', onResize);
+
+    // Cleanup (optional, untuk mencegah memory leak)
+    // Tidak diperlukan untuk fanpage, tapi bagus jika ada.
+})();
+
+// ========================================
 // NAVBAR SCROLL BEHAVIOR
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
@@ -1099,8 +1258,8 @@ window.addEventListener('load', function() {
             // Setelah 1.5 detik, hilangkan seluruh loading screen
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
-            }, 1600);
-        }, 900); // Jeda 900ms agar loading awal terlihat sebentar
+            }, 2900);
+        }, 1200); // Jeda 900ms agar loading awal terlihat sebentar
     }
 });
 
@@ -1119,9 +1278,9 @@ if (clearStickersBtn) {
 
         showToast('🧹 Semua stiker telah dibersihkan!', 'info');
         // Kasih efek feedback sebentar
-        clearStickersBtn.textContent = '✅ Bersih!';
+        clearStickersBtn.textContent = '✅ Cleaned!';
         setTimeout(() => {
-            clearStickersBtn.textContent = 'Bersihkan Stiker';
+            clearStickersBtn.textContent = 'Clear All Stickers';
         }, 1000);
     });
 }
@@ -1141,9 +1300,9 @@ if (clearPhotoStickersBtn) {
 
         showToast('🧹 Semua stiker telah dibersihkan!', 'info');
         // Feedback tombol sebentar
-        clearPhotoStickersBtn.textContent = '✅ Bersih!';
+        clearPhotoStickersBtn.textContent = '✅ Cleaned!';
         setTimeout(() => {
-            clearPhotoStickersBtn.textContent = 'Bersihkan Semua Stiker';
+            clearPhotoStickersBtn.textContent = 'Clear All Stickers';
         }, 1000);
     });
 }

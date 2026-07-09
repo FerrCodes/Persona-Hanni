@@ -1393,156 +1393,396 @@ body.potato-mode .control-btn {
 }
 
 /* ========================================
-   FOOTER (ELEGAN & INTERAKTIF)
+   FOOTER — FINAL VERSION
    ======================================== */
 footer {
-    background: linear-gradient(135deg, #f8f0f5 0%, #fce4ec 100%);
+    background: linear-gradient(135deg, #fdf6f9 0%, #fce4ec 100%);
     padding: 40px 20px 30px;
     text-align: center;
-    border-top: 3px solid var(--theme-secondary);
-    margin-top: 40px;
+    margin-top: 50px;
+    border-top: 1px solid rgba(255, 158, 201, 0.15);
 }
 
-.footer-content {
+.footer-container {
     max-width: 600px;
     margin: 0 auto;
 }
 
-.footer-brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 8px;
+.footer-divider {
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--theme-accent), transparent);
+    margin: 0 auto 16px;
+    border-radius: 4px;
+    opacity: 0.3;
 }
 
-.footer-icon {
-    font-size: 1.8rem;
-    animation: gentleFloat 3s ease-in-out infinite;
+/* ===== BARIS 1: Tanggal ===== */
+.footer-date {
+    font-family: var(--font-hand);
+    font-size: 0.8rem;
+    color: var(--text);
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+/* ===== BARIS 2: Nama ===== */
+.footer-brand {
+    margin-bottom: 2px;
 }
 
 .footer-name {
     font-family: var(--font-hand);
+    font-size: 2rem;
+    font-weight: 700;
     color: var(--theme-accent);
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
 }
 
-.footer-text {
+.footer-name:hover {
+    color: #ff6b8a;
+}
+
+/* ===== BARIS 3: Tagline ===== */
+.footer-tagline {
     font-family: var(--font-hand);
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--text);
-    margin-bottom: 16px;
-    letter-spacing: 0.5px;
+    opacity: 0.8;
+    margin: 2px 0 10px 0;
 }
 
-.footer-social {
+.heart {
+    display: inline-block;
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.2); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+}
+
+/* ===== BARIS 4: Username + Icon IG (sejajar) ===== */
+.footer-ig-wrapper {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 14px;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.social-link {
+.footer-ig-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
-    border: 2px solid var(--theme-secondary);
-    font-size: 1.4rem;
+    gap: 8px;
     text-decoration: none;
     color: var(--text);
+    padding: 6px 16px 6px 18px;
+    border-radius: 30px;
+    border: 1.5px solid var(--theme-secondary);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.social-link:hover {
-    transform: translateY(-4px) scale(1.1);
+.footer-ig-link:hover {
     background: var(--theme-accent);
     border-color: var(--theme-accent);
     color: white;
-    box-shadow: 0 6px 20px rgba(255, 158, 201, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 158, 201, 0.3);
 }
 
+.ig-username {
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.ig-icon {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.footer-ig-link:hover .ig-icon {
+    transform: scale(1.1);
+}
+
+/* ===== BARIS 5: Copyright ===== */
 .footer-copy {
-    font-size: 0.75rem;
-    color: #999;
-    letter-spacing: 0.3px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    padding-top: 14px;
+    font-size: 0.7rem;
+    color: #b0a0a8;
+    letter-spacing: 0.5px;
     margin-top: 4px;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    padding-top: 12px;
 }
 
-/* ===== DARK MODE ===== */
+/* ========================================
+   DARK MODE
+   ======================================== */
 body.dark-mode footer {
     background: linear-gradient(135deg, #0c0c1e 0%, #1a1a2e 100%);
-    border-top-color: rgba(192, 132, 252, 0.3);
+    border-top-color: rgba(192, 132, 252, 0.1);
+}
+body.dark-mode .footer-date {
+    color: #e2e8f0;
+    opacity: 0.8;
 }
 body.dark-mode .footer-name {
     color: #c084fc;
 }
-body.dark-mode .footer-text {
+body.dark-mode .footer-name:hover {
+    color: #a78bfa;
+}
+body.dark-mode .footer-tagline {
     color: #d1d5db;
 }
-body.dark-mode .social-link {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(192, 132, 252, 0.3);
+body.dark-mode .footer-ig-link {
     color: #e2e8f0;
+    border-color: rgba(192, 132, 252, 0.3);
+    background: rgba(255, 255, 255, 0.04);
 }
-body.dark-mode .social-link:hover {
-    background: rgba(192, 132, 252, 0.3);
+body.dark-mode .footer-ig-link:hover {
+    background: rgba(192, 132, 252, 0.2);
     border-color: #c084fc;
     color: #ffffff;
 }
 body.dark-mode .footer-copy {
     color: #6b7280;
-    border-top-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.05);
+}
+body.dark-mode .footer-divider {
+    background: linear-gradient(90deg, transparent, #c084fc, transparent);
+    opacity: 0.2;
 }
 
-/* ===== COZY MODE ===== */
+/* ========================================
+   COZY MODE
+   ======================================== */
 body.potato-mode footer {
     background: linear-gradient(135deg, #fff5e6 0%, #ffe8e0 100%);
-    border-top-color: #FFB6C1;
+    border-top-color: rgba(255, 182, 193, 0.2);
+}
+body.potato-mode .footer-date {
+    color: #5D4037;
+    opacity: 0.8;
 }
 body.potato-mode .footer-name {
     color: #FF69B4;
 }
-body.potato-mode .social-link {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: #FFB6C1;
+body.potato-mode .footer-name:hover {
+    color: #e75480;
+}
+body.potato-mode .footer-tagline {
     color: #5D4037;
 }
-body.potato-mode .social-link:hover {
+body.potato-mode .footer-ig-link {
+    color: #5D4037;
+    border-color: #FFB6C1;
+    background: rgba(255, 255, 255, 0.5);
+}
+body.potato-mode .footer-ig-link:hover {
     background: #FFB6C1;
     border-color: #FF69B4;
     color: white;
 }
-
-/* Animasi ikon kelinci */
-@keyframes gentleFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+body.potato-mode .footer-copy {
+    color: #b0958a;
+}
+body.potato-mode .footer-divider {
+    background: linear-gradient(90deg, transparent, #FFB6C1, transparent);
+    opacity: 0.4;
 }
 
-/* Responsive Mobile */
+/* ========================================
+   RESPONSIVE
+   ======================================== */
 @media (max-width: 768px) {
-    .footer-brand {
-        font-size: 1.1rem;
+    footer {
+        padding: 30px 20px 22px;
     }
-    .footer-text {
-        font-size: 0.95rem;
+    .footer-date {
+        font-size: 0.7rem;
     }
-    .social-link {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
+    .footer-name {
+        font-size: 1.6rem;
+    }
+    .footer-tagline {
+        font-size: 0.9rem;
+    }
+    .footer-ig-link {
+        padding: 5px 14px 5px 16px;
+    }
+    .ig-username {
+        font-size: 0.75rem;
+    }
+    .ig-icon {
+        width: 18px;
+        height: 18px;
     }
     .footer-copy {
+        font-size: 0.65rem;
+    }
+    .footer-divider {
+        width: 40px;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-name {
+        font-size: 1.4rem;
+    }
+    .footer-tagline {
+        font-size: 0.8rem;
+    }
+    .footer-ig-link {
+        padding: 4px 12px 4px 14px;
+    }
+    .ig-username {
         font-size: 0.7rem;
+    }
+    .ig-icon {
+        width: 16px;
+        height: 16px;
+    }
+    .footer-date {
+        font-size: 0.65rem;
+    }
+}
+
+/* ========================================
+   FLOATING BUBBLE — COMEBACK
+   ======================================== */
+.floating-bubble {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid var(--theme-accent);
+    border-radius: 60px 60px 60px 12px;
+    padding: 14px 22px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    cursor: default;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: float-bubble 4s ease-in-out infinite;
+    max-width: 260px;
+    text-align: left;
+}
+
+.floating-bubble:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.bubble-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bubble-icon {
+    font-size: 1.2rem;
+    margin-right: 4px;
+}
+
+.bubble-text {
+    font-family: var(--font-hand);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+}
+
+.bubble-sub {
+    font-family: var(--font-main);
+    font-size: 0.7rem;
+    color: var(--theme-accent);
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+}
+
+/* Animasi melayang */
+@keyframes float-bubble {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+/* ===== DARK MODE ===== */
+body.dark-mode .floating-bubble {
+    background: rgba(26, 26, 46, 0.92);
+    border-color: rgba(192, 132, 252, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+body.dark-mode .bubble-text {
+    color: #e2e8f0;
+}
+body.dark-mode .bubble-sub {
+    color: #c084fc;
+    opacity: 0.8;
+}
+
+/* ===== COZY MODE ===== */
+body.potato-mode .floating-bubble {
+    background: rgba(255, 245, 228, 0.95);
+    border-color: #FFB6C1;
+    box-shadow: 0 8px 32px rgba(255, 182, 193, 0.25);
+}
+body.potato-mode .bubble-text {
+    color: #5D4037;
+}
+body.potato-mode .bubble-sub {
+    color: #FF69B4;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .floating-bubble {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 18px;
+        max-width: 210px;
+        border-radius: 40px 40px 40px 10px;
+    }
+    .bubble-text {
+        font-size: 0.85rem;
+    }
+    .bubble-sub {
+        font-size: 0.6rem;
+    }
+    .bubble-icon {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-bubble {
+        bottom: 14px;
+        right: 14px;
+        padding: 10px 14px;
+        max-width: 170px;
+        border-radius: 30px 30px 30px 8px;
+    }
+    .bubble-text {
+        font-size: 0.75rem;
+    }
+    .bubble-sub {
+        font-size: 0.55rem;
+    }
+    .bubble-icon {
+        font-size: 0.9rem;
     }
 }
 
