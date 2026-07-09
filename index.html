@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Persona Fanpage Hanni</title>
+    <title>Hanni Pham Fanpage</title>
     <link rel="stylesheet" href="style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;500;700&family=Press+Start+2P&family=Gaegu:wght@400;700&display=swap"
@@ -79,9 +79,38 @@
             <div class="floating-element bread">🥖</div>
         </div>
 
-        <!-- Kiri: Teks & Musik -->
+        <!-- Image Side -->
+        <div class="hero-image-wrapper">
+            <!-- Sparkle Container -->
+            <div class="sparkle-container" id="sparkle-container"></div>
+
+            <!-- Cute Photo Card -->
+            <div class="hero-photo-card">
+                <div class="photo-card-deco photo-card-deco-tl">🎀</div>
+                <div class="photo-card-deco photo-card-deco-tr">✨</div>
+                <div class="photo-card-deco photo-card-deco-bl">🌸</div>
+                <div class="photo-card-deco photo-card-deco-br">💕</div>
+
+                <img src="assets/img/home.jpg" alt="Hanni" id="hanni-img" loading="lazy">
+                
+                <!-- Mini Status Badge -->
+                <div class="status-badge" id="status-badge" title="Click me! 🐰">
+                    <span class="status-icon">🐰</span>
+                    <span class="status-text">Vibing</span>
+                </div>
+            </div>
+
+            <div class="outfit-selector">
+                <button class="outfit-btn" data-img="assets/img/default.jpg" title="Default">🧢</button>
+                <button class="outfit-btn" data-img="assets/img/hn2.jpg" title="Photo 2">👜</button>
+                <button class="outfit-btn" data-img="assets/img/hn3.jpg" title="Photo 3">🎤</button>
+                <button class="outfit-btn" data-img="assets/img/hn22.jpg" title="Photo 4">🐰</button>
+            </div>
+        </div>
+
+        <!-- Text Side -->
         <div class="hero-content">
-            <div class="badge">NewJeans Member</div>
+            <div class="badge">✦ NewJeans Member ✦</div>
             <h1 class="glitch" data-text="HANNI">하니</h1>
             <p class="subtitle" id="hero-subtitle">Hanni the Idol 🌟</p>
 
@@ -108,68 +137,64 @@
                 </div>
             </div>
         </div>
-
-        <!-- Kanan: Foto + Outfit Selector -->
-        <div class="hero-image-wrapper">
-            <!-- Sparkle Container -->
-            <div class="sparkle-container" id="sparkle-container"></div>
-
-            <img src="assets/img/home.jpg" alt="Hanni" id="hanni-img" loading="lazy">
-            <div class="speech-bubble" id="speech-bubble">Naurrr~!</div>
-
-            <!-- Stickers -->
-            <div class="sticker-decorations">
-                <div class="sticker sticker-1">🎀</div>
-                <div class="sticker sticker-2">✨</div>
-                <div class="sticker sticker-3">💕</div>
-                <div class="sticker sticker-4">🌸</div>
-            </div>
-
-            <div class="outfit-selector">
-                <button class="outfit-btn" data-img="assets/img/default.jpg" title="Default">🧢</button>
-                <button class="outfit-btn" data-img="assets/img/hn2.jpg" title="Photo 2">👜</button>
-                <button class="outfit-btn" data-img="assets/img/hn3.jpg" title="Photo 3">🎤</button>
-                <button class="outfit-btn" data-img="assets/img/hn22.jpg" title="Photo 4">🐰</button>
-            </div>
-        </div>
     </header>
 
     <!-- Personality Section -->
     <section class="personality" id="charm-section">
-        <h2 class="section-title">Hanni's Charms</h2>
+        <!-- Section Decorations -->
+        <div class="section-decorations">
+            <div class="floating-deco deco-1">💕</div>
+            <div class="floating-deco deco-2">⭐</div>
+            <div class="floating-deco deco-3">✨</div>
+        </div>
+        
+        <h2 class="section-title animate-on-scroll">Hanni's Charms</h2>
         <div class="traits-container">
-            <div class="trait-card" id="card-1">
+            <div class="trait-card animate-on-scroll" id="card-1" style="animation-delay: 0.1s;">
                 <div class="card-icon">🇦🇺</div>
                 <h3>Viet-Aussie</h3>
-                <p>Logat Australia yang ikonik & multibahasa jenius.</p>
+                <p>Iconic Australian accent & multilingual genius.</p>
             </div>
-            <div class="trait-card" id="card-2">
+            <div class="trait-card animate-on-scroll" id="card-2" style="animation-delay: 0.2s;">
                 <div class="card-icon">🎤</div>
                 <h3>Honey Voice</h3>
-                <p>Suara yang manis seperti madu & dance yang swag.</p>
+                <p>Sweet voice like honey & swag dance moves.</p>
             </div>
-            <div class="trait-card" id="card-3">
+            <div class="trait-card animate-on-scroll" id="card-3" style="animation-delay: 0.3s;">
                 <div class="card-icon">🥖</div>
                 <h3>Bread Lover</h3>
-                <p>Sangat terobsesi dengan roti. Roti is life.</p>
+                <p>Obsessed with bread. Bread is life.</p>
             </div>
         </div>
     </section>
 
     <!-- Sticker Deco Area -->
     <section class="sticker-zone" id="sticker-area">
-        <h2>🎀 Y2K Sticker Deco 🎀</h2>
-        <p>Klik di dalam kotak putih untuk menempel stiker!</p>
-        <div class="sticker-canvas">
+        <!-- Section Decorations -->
+        <div class="section-decorations">
+            <div class="floating-deco deco-4">🎀</div>
+            <div class="floating-deco deco-5">🌸</div>
+        </div>
+        
+        <h2 class="animate-on-scroll">🎀 Y2K Sticker Deco 🎀</h2>
+        <p class="animate-on-scroll" style="animation-delay: 0.1s;">Click inside the white box to place stickers!</p>
+        <div class="sticker-canvas animate-on-scroll" style="animation-delay: 0.2s;">
             <div class="placeholder-text">Tap here!</div>
         </div>
-            <button id="clear-stickers-btn" class="pixel-btn" aria-label="Clear all stickers" style="margin-top: 15px;">Bersihkan Stiker</button>
+            <button id="clear-stickers-btn" class="pixel-btn animate-on-scroll" aria-label="Clear all stickers" style="margin-top: 15px; animation-delay: 0.3s;">Clear Stickers</button>
     </section>
 
     <!-- Photo Booth -->
     <section class="photo-booth-section">
-        <h2 class="section-title">📸 Hanni's Photo Booth</h2>
-        <div class="photo-booth-container">
+        <!-- Section Decorations -->
+        <div class="section-decorations">
+            <div class="floating-deco deco-6">📸</div>
+            <div class="floating-deco deco-7">✨</div>
+            <div class="floating-deco deco-8">🎨</div>
+        </div>
+        
+        <h2 class="section-title animate-on-scroll">📸 Hanni's Photo Booth</h2>
+        <div class="photo-booth-container animate-on-scroll" style="animation-delay: 0.1s;">
             <!-- WRAPPER: Frame + Panah -->
             <div class="photo-viewer">
                 <button id="photo-prev-btn" class="photo-arrow-btn" aria-label="Previous photo">❮</button>
@@ -230,7 +255,7 @@
                         <button class="add-sticker-btn" data-sticker="💙">💙</button>
                         <button class="add-sticker-btn" data-sticker="🌸">🌸</button>
                     </div>
-                    <button id="clear-photo-stickers-btn" class="pixel-btn" aria-label="Clear all photo stickers" style="margin-top: 15px; width: 100%;">Bersihkan Semua Stiker</button>
+                    <button id="clear-photo-stickers-btn" class="pixel-btn" aria-label="Clear all photo stickers" style="margin-top: 15px; width: 100%;">Clear All Stickers</button>
                 </div>
 
                 <button id="download-photo" class="pixel-btn" aria-label="Download photo" title="Download photo">📥 Download</button>
@@ -240,10 +265,16 @@
 
     <!-- Mini Games -->
     <section class="mini-games-section">
-        <h2 class="section-title">🎮 Hanni's Mini Games</h2>
+        <!-- Section Decorations -->
+        <div class="section-decorations">
+            <div class="floating-deco deco-9">🎮</div>
+            <div class="floating-deco deco-10">🐰</div>
+        </div>
+        
+        <h2 class="section-title animate-on-scroll">🎮 Hanni's Mini Games</h2>
 
         <!-- Bunny Hop -->
-        <div class="game-box">
+        <div class="game-box animate-on-scroll">
             <h3>🐰 Bunny Hop Challenge</h3>
             <p>Press SPACE to jump!</p>
             <div class="bunny-game-container">
@@ -259,14 +290,20 @@
 
     <!-- Hanni's Playlist -->
     <section class="playlist-section">
-        <h2 class="section-title">🎵 A Song for Hanni</h2>
-        <p class="section-desc-info">Lagu dibawah ini adalah lagu yang menurutku paling cocok dengan vibe dan kepribadian dia</p>
+        <!-- Section Decorations -->
+        <div class="section-decorations">
+            <div class="floating-deco deco-11">🎵</div>
+            <div class="floating-deco deco-12">💿</div>
+        </div>
+        
+        <h2 class="section-title animate-on-scroll">🎵 A Song for Hanni</h2>
+        <p class="section-desc-info animate-on-scroll" style="animation-delay: 0.1s;">The song below is a song that matches his personality, for me</p>
 
         <div class="playlist-grid" id="playlist-grid">
-            <!-- Isi dari JavaScript -->
+            <!-- Filled by JavaScript -->
         </div>
-        <div class="playlist-footer">
-            <a href="https://open.spotify.com/playlist/4UWKGdu7BLU9AKORv95TYb?si=4beb4ac6961a4717&pt=15e369cd6100c965d8e02be45abddead" target="_blank" class="pixel-btn" id="playlist-link-btn">Lihat playlist</a>
+        <div class="playlist-footer animate-on-scroll" style="animation-delay: 0.2s;">
+            <a href="https://open.spotify.com/playlist/4UWKGdu7BLU9AKORv95TYb?si=4beb4ac6961a4717&pt=15e369cd6100c965d8e02be45abddead" target="_blank" class="pixel-btn" id="playlist-link-btn">View Playlist</a>
             <p class="playlist-credit">playlist by Feri</p>
         </div>
     </section>

@@ -32,6 +32,12 @@ const observer = new IntersectionObserver((entries) => {
             if (element.tagName === 'IMG' && element.loading === 'lazy') {
                 element.classList.add('loaded');
             }
+            // Add visible class for scroll animations
+            if (element.classList.contains('animate-on-scroll')) {
+                element.classList.add('visible');
+                // Optional: unobserve after animation for performance
+                // observer.unobserve(element);
+            }
         }
     });
 }, observerOptions);
@@ -89,31 +95,31 @@ if (particlesContainer &&
 // ========================================
 const normalState = {
     subtitle: "Hanni the Idol 🌟",
-    bubble: "Naurrr~!",
+    badge: { icon: "🐰", text: "Vibing" },
     cards: [
-        { title: "Viet-Aussie", text: "Logat Australia yang ikonik & multibahasa jenius.", icon: "🇦🇺" },
-        { title: "Honey Voice", text: "Suara yang manis seperti madu & dance yang swag.", icon: "🎤" },
-        { title: "Bread Lover", text: "Sangat terobsesi dengan roti. Roti is life.", icon: "🥖" }
+        { title: "Viet-Aussie", text: "Iconic Australian accent & multilingual genius.", icon: "🇦🇺" },
+        { title: "Honey Voice", text: "Sweet voice like honey & swag dance moves.", icon: "🎤" },
+        { title: "Bread Lover", text: "Obsessed with bread. Bread is life.", icon: "🥖" }
     ]
 };
 
 const potatoState = {
     subtitle: "Soft & Cozy Hanni 💕",
-    bubble: "Feels like a warm hug~",
+    badge: { icon: "🧸", text: "Cozy" },
     cards: [
-        { title: "Sweet Soul", text: "Kepribadian yang hangat dan menenangkan seperti secangkir teh.", icon: "🫖" },
-        { title: "Gentle Heart", text: "Selalu memberikan vibes yang lembut dan caring ke semua orang.", icon: "🌸" },
-        { title: "Cozy Vibes", text: "Kehadiran yang bikin nyaman, seperti pelukan di hari yang dingin.", icon: "🧸" }
+        { title: "Sweet Soul", text: "Warm and calming personality like a cup of tea.", icon: "🫖" },
+        { title: "Gentle Heart", text: "Always giving soft and caring vibes to everyone.", icon: "🌸" },
+        { title: "Cozy Vibes", text: "A comforting presence like a hug on a cold day.", icon: "🧸" }
     ]
 };
 
 const darkState = {
     subtitle: "Night Owl Hanni 🌙",
-    bubble: "Midnight vibes~",
+    badge: { icon: "🌙", text: "Dreaming" },
     cards: [
-        { title: "Moon Child", text: "Energi malam yang tenang, perfect untuk late night talks.", icon: "🌙" },
-        { title: "Starlight", text: "Bersinar lembut di kegelapan, memberikan cahaya yang menenangkan.", icon: "⭐" },
-        { title: "Dream Maker", text: "Menciptakan suasana yang peaceful dan dreamy di malam hari.", icon: "💫" }
+        { title: "Moon Child", text: "Calm night energy, perfect for late night talks.", icon: "🌙" },
+        { title: "Starlight", text: "Shining softly in the darkness, a soothing light.", icon: "⭐" },
+        { title: "Dream Maker", text: "Creating peaceful and dreamy vibes at night.", icon: "💫" }
     ]
 };
 
@@ -128,7 +134,7 @@ const modeBtn = document.getElementById('mode-btn');
 const darkModeBtn = document.getElementById('dark-mode-btn');
 const hanniImg = document.getElementById('hanni-img');
 const heroSubtitle = document.getElementById('hero-subtitle');
-const speechBubble = document.getElementById('speech-bubble');
+const statusBadge = document.getElementById('status-badge');
 const cards = [
     document.getElementById('card-1'),
     document.getElementById('card-2'),
@@ -140,18 +146,18 @@ const cards = [
 // ========================================
 if (modeBtn) {
     modeBtn.addEventListener('click', () => {
-        // Jika Dark Mode aktif, matikan dulu
+        // If Dark Mode is active, disable it first
         if (isDarkMode) {
             body.classList.remove('dark-mode');
             isDarkMode = false;
             darkModeBtn.innerText = "🌙 Dark";
         }
 
-        // Toggle status Cozy
+        // Toggle Cozy status
         isPotatoMode = !isPotatoMode;
         const currentState = isPotatoMode ? potatoState : normalState;
 
-        // Update class & teks tombol
+        // Update class & button text
         if (isPotatoMode) {
             body.classList.add('potato-mode');
             modeBtn.innerText = "✨ default";
@@ -160,20 +166,25 @@ if (modeBtn) {
             modeBtn.innerText = "💕 Cozy";
         }
 
-        // Panggil fungsi update UI (tanpa duplikasi)
+        // Call UI update function (avoid duplication)
         updateUI(currentState);
     });
 }
 
 // ========================================
-// UI UPDATE FUNCTION (untuk menghindari duplikasi)
+// UI UPDATE FUNCTION (avoid duplication)
 // ========================================
 function updateUI(state) {
     // Update subtitle
     if (heroSubtitle) heroSubtitle.innerText = state.subtitle;
     
-    // Update speech bubble
-    if (speechBubble) speechBubble.innerText = state.bubble;
+    // Update status badge
+    if (statusBadge && state.badge) {
+        const icon = statusBadge.querySelector('.status-icon');
+        const text = statusBadge.querySelector('.status-text');
+        if (icon) icon.innerText = state.badge.icon;
+        if (text) text.innerText = state.badge.text;
+    }
 
     // Update 3 personality cards
     cards.forEach((card, index) => {
@@ -196,18 +207,18 @@ function updateUI(state) {
 // ========================================
 if (darkModeBtn) {
     darkModeBtn.addEventListener('click', () => {
-        // Jika Cozy Mode aktif, matikan dulu
+        // If Cozy Mode is active, disable it first
         if (isPotatoMode) {
             body.classList.remove('potato-mode');
             isPotatoMode = false;
             modeBtn.innerText = "💕 Cozy";
         }
 
-        // Toggle status Dark
+        // Toggle Dark status
         isDarkMode = !isDarkMode;
         const currentState = isDarkMode ? darkState : normalState;
 
-        // Update class & teks tombol
+        // Update class & button text
         if (isDarkMode) {
             body.classList.add('dark-mode');
             darkModeBtn.innerText = "☀️ Light";
@@ -216,7 +227,7 @@ if (darkModeBtn) {
             darkModeBtn.innerText = "🌙 Dark";
         }
 
-        // Panggil fungsi update UI (tanpa duplikasi)
+        // Call UI update function (avoid duplication)
         updateUI(currentState);
     });
 }
@@ -456,7 +467,7 @@ if (downloadPhotoBtn) {
     downloadPhotoBtn.addEventListener('click', async () => {
         const photoFrame = document.getElementById('photo-frame');
         if (!photoFrame) {
-            showToast('❌ Frame tidak ditemukan!', 'error');
+            showToast('❌ Frame not found!', 'error');
             return;
         }
 
@@ -473,7 +484,7 @@ if (downloadPhotoBtn) {
             });
 
             canvas.toBlob((blob) => {
-                if (!blob) throw new Error('Blob gagal dibuat');
+                if (!blob) throw new Error('Failed to create blob');
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
@@ -483,11 +494,11 @@ if (downloadPhotoBtn) {
                 document.body.removeChild(link);
                 URL.revokeObjectURL(url);
 
-                showToast('📸 Foto berhasil disimpan!', 'success');
+                showToast('📸 Photo saved successfully!', 'success');
             }, 'image/png');
         } catch (error) {
             console.error(error);
-            showToast('❌ Gagal menyimpan. Coba screenshot manual.', 'error');
+            showToast('❌ Failed to save. Try manual screenshot.', 'error');
         } finally {
             downloadPhotoBtn.innerText = originalText;
             downloadPhotoBtn.disabled = false;
@@ -512,16 +523,124 @@ function toggleMusic() {
         audio.pause();
         if (playBtn) playBtn.innerText = "▶";
         if (visualizer) visualizer.classList.remove('playing');
+        
+        // Update status badge back to default
+        updateStatusBadge(false);
         isPlaying = false;
     } else {
         audio.play().then(() => {
             if (playBtn) playBtn.innerText = "⏸";
             if (visualizer) visualizer.classList.add('playing');
+            
+            // Update status badge to playing
+            updateStatusBadge(true);
             isPlaying = true;
         }).catch(error => {
-            console.log("Autoplay dicegah browser. Klik tombol play untuk mulai.");
+            console.log("Autoplay prevented by browser. Click play button to start.");
         });
     }
+}
+
+// Function to update status badge based on music state
+function updateStatusBadge(isPlaying) {
+    if (!statusBadge) return;
+    
+    const icon = statusBadge.querySelector('.status-icon');
+    const text = statusBadge.querySelector('.status-text');
+    
+    if (isPlaying) {
+        statusBadge.classList.add('playing');
+        if (icon) icon.innerText = "🎵";
+        if (text) text.innerText = "Playing music";
+    } else {
+        statusBadge.classList.remove('playing');
+        // Restore based on current mode
+        if (isPotatoMode) {
+            if (icon) icon.innerText = potatoState.badge.icon;
+            if (text) text.innerText = potatoState.badge.text;
+        } else if (isDarkMode) {
+            if (icon) icon.innerText = darkState.badge.icon;
+            if (text) text.innerText = darkState.badge.text;
+        } else {
+            if (icon) icon.innerText = normalState.badge.icon;
+            if (text) text.innerText = normalState.badge.text;
+        }
+    }
+}
+
+// Random status updates (cute feature!)
+const randomStatuses = [
+    { icon: "🥖", text: "Bread time" },
+    { icon: "✨", text: "Shining" },
+    { icon: "💕", text: "Happy" },
+    { icon: "🐰", text: "Bunny mode" },
+    { icon: "🎤", text: "Singing" },
+    { icon: "😊", text: "Smiling" }
+];
+
+let statusInterval = null;
+
+function startRandomStatus() {
+    // Only change status if music is not playing
+    statusInterval = setInterval(() => {
+        if (!isPlaying && statusBadge) {
+            const randomStatus = randomStatuses[Math.floor(Math.random() * randomStatuses.length)];
+            const icon = statusBadge.querySelector('.status-icon');
+            const text = statusBadge.querySelector('.status-text');
+            
+            if (icon) icon.innerText = randomStatus.icon;
+            if (text) text.innerText = randomStatus.text;
+            
+            // Return to normal after 3 seconds
+            setTimeout(() => {
+                if (!isPlaying) {
+                    updateStatusBadge(false);
+                }
+            }, 3000);
+        }
+    }, 15000); // Change every 15 seconds
+}
+
+// Start random status on load (optional, you can disable this)
+if (!isMobile) {
+    window.addEventListener('load', () => {
+        setTimeout(startRandomStatus, 5000); // Start after 5 seconds
+    });
+}
+
+// Click interaction on status badge (fun feature!)
+if (statusBadge) {
+    statusBadge.addEventListener('click', () => {
+        const icon = statusBadge.querySelector('.status-icon');
+        const text = statusBadge.querySelector('.status-text');
+        
+        // Cycle through cute reactions
+        const reactions = [
+            { icon: "🐰", text: "Bunny!" },
+            { icon: "🥖", text: "Bread!" },
+            { icon: "😊", text: "Hehe~" },
+            { icon: "💕", text: "Love u!" },
+            { icon: "✨", text: "Sparkle!" }
+        ];
+        
+        const reaction = reactions[Math.floor(Math.random() * reactions.length)];
+        
+        if (icon) icon.innerText = reaction.icon;
+        if (text) text.innerText = reaction.text;
+        
+        // Add bounce effect
+        statusBadge.style.transform = 'scale(1.15)';
+        setTimeout(() => {
+            statusBadge.style.transform = '';
+        }, 200);
+        
+        // Return to normal after 2 seconds
+        setTimeout(() => {
+            if (!isPlaying) {
+                updateStatusBadge(false);
+            }
+        }, 2000);
+    });
 }
 
 if(playBtn) {
@@ -543,9 +662,10 @@ window.addEventListener('load', () => {
             playPromise.then(_ => {
                 if (playBtn) playBtn.innerText = "⏸";
                 if (visualizer) visualizer.classList.add('playing');
+                updateStatusBadge(true); // Update status badge
                 isPlaying = true;
             }).catch(error => {
-                console.log("Menunggu interaksi user untuk play musik.");
+                console.log("Waiting for user interaction to play music.");
             });
         }
     }
@@ -562,12 +682,12 @@ outfitBtns.forEach(btn => {
         const newSrc = btn.getAttribute('data-img');
         if (!mainImg) return;
 
-        // 🔥 Preload gambar terlebih dahulu
+        // 🔥 Preload image first
         const preloader = new Image();
         preloader.src = newSrc;
         
         preloader.onload = () => {
-            // Saat gambar sudah siap, baru kita fade-in
+            // Once image is ready, fade in
             mainImg.style.opacity = "0";
             mainImg.style.transform = "scale(0.9)";
             
@@ -578,7 +698,7 @@ outfitBtns.forEach(btn => {
             }, 150);
         };
 
-        // Jika gagal load (misal file hilang), tetap coba tampilkan
+        // If load fails (e.g., file missing), still try to display
         preloader.onerror = () => {
             mainImg.src = newSrc;
         };
@@ -867,7 +987,8 @@ if (playlistGrid) {
     playlistGrid.innerHTML = '';
     playlistData.forEach((song, index) => {
         const item = document.createElement('div');
-        item.className = 'playlist-item';
+        item.className = 'playlist-item animate-on-scroll';
+        item.style.animationDelay = `${index * 0.1}s`;
         item.innerHTML = `
             <span class="playlist-num">${String(index + 1).padStart(2, '0')}</span>
             <span class="playlist-title">${song.title}</span>
@@ -875,6 +996,11 @@ if (playlistGrid) {
             <span class="playlist-emoji">${song.emoji}</span>
         `;
         playlistGrid.appendChild(item);
+        
+        // Observe the newly created item
+        if (observer) {
+            observer.observe(item);
+        }
     });
 }
 
@@ -907,6 +1033,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Observe lazy load images
     document.querySelectorAll('img[loading="lazy"]').forEach(img => {
         observer.observe(img);
+    });
+    
+    // Observe elements with animate-on-scroll class
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
     });
 });
 
@@ -955,10 +1086,10 @@ window.addEventListener('load', function() {
                 spinner.style.display = 'none';
             }
 
-            // Ubah teks loading menjadi credit
+            // Change loading text to credit
             loadingText.textContent = '✨ Crafted by Feri';
             
-            // Efek fade-in halus untuk teks
+            // Smooth fade-in effect for text
             loadingText.style.transition = 'opacity 0.5s ease';
             loadingText.style.opacity = '0';
             setTimeout(() => {
@@ -982,7 +1113,7 @@ if (clearStickersBtn) {
         const canvas = document.querySelector('.sticker-canvas');
         if (!canvas) return;
 
-        // Hapus semua elemen dengan class 'sticker' di dalam canvas
+        // Remove all elements with class 'sticker' inside canvas
         const stickers = canvas.querySelectorAll('.sticker');
         stickers.forEach(el => el.remove());
 
@@ -1004,7 +1135,7 @@ if (clearPhotoStickersBtn) {
         const container = document.getElementById('photo-stickers');
         if (!container) return;
 
-        // Hapus semua elemen di dalam photo-stickers
+        // Remove all elements inside photo-stickers
         const stickers = container.querySelectorAll('.photo-sticker');
         stickers.forEach(el => el.remove());
 
@@ -1021,7 +1152,7 @@ if (clearPhotoStickersBtn) {
 // TOAST NOTIFICATION SYSTEM
 // ========================================
 function showToast(message, type = 'info') {
-    // Hapus toast lama jika ada
+    // Remove old toast if exists
     const oldToast = document.querySelector('.custom-toast');
     if (oldToast) oldToast.remove();
 
@@ -1030,12 +1161,12 @@ function showToast(message, type = 'info') {
     toast.textContent = message;
     document.body.appendChild(toast);
 
-    // Trigger muncul dengan sedikit delay biar transisi jalan
+    // Trigger appearance with slight delay for transition
     requestAnimationFrame(() => {
         toast.classList.add('show');
     });
 
-    // Hilang setelah 1.8 detik
+    // Disappear after 1.8 seconds
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 400);

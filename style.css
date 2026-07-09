@@ -254,6 +254,23 @@ img[loading="lazy"].loaded {
     border-color 0.3s ease;
     border-radius: 8px;
     will-change: transform;
+    position: relative;
+    overflow: hidden;
+}
+
+.pixel-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.pixel-btn:hover::before {
+    left: 100%;
 }
 
 .pixel-btn:hover {
@@ -267,16 +284,16 @@ img[loading="lazy"].loaded {
 }
 
 /* ========================================
-   HERO SECTION
+   HERO SECTION - AESTHETIC & CUTE
    ======================================== */
 .hero {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 60px 20px;
-    gap: 40px;
-    min-height: 80vh;
+    padding: 80px 5% 60px;
+    gap: 60px;
+    min-height: 85vh;
     position: relative;
     overflow: hidden;
 }
@@ -293,51 +310,33 @@ img[loading="lazy"].loaded {
 
 .floating-element {
     position: absolute;
-    font-size: 2.5rem;
-    animation: float-drift 6s ease-in-out infinite;
-    opacity: 0.6;
+    font-size: 2rem;
+    animation: float-drift 8s ease-in-out infinite;
+    opacity: 0.4;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
 }
-.floating-element.star { top: 15%; left: 10%; animation-delay: 0s; }
-.floating-element.heart { top: 60%; right: 15%; animation-delay: 1s; }
-.floating-element.sparkle { top: 30%; right: 25%; animation-delay: 2s; }
-.floating-element.bunny { bottom: 20%; left: 20%; animation-delay: 3s; }
-.floating-element.bread { top: 70%; left: 40%; animation-delay: 1.5s; }
+.floating-element.star { top: 15%; left: 10%; animation-delay: 0s; font-size: 2rem; }
+.floating-element.heart { top: 50%; right: 8%; animation-delay: 1.5s; font-size: 2.5rem; }
+.floating-element.sparkle { top: 28%; right: 18%; animation-delay: 3s; font-size: 1.8rem; }
+.floating-element.bunny { bottom: 20%; left: 12%; animation-delay: 4.5s; font-size: 2.2rem; }
+.floating-element.bread { top: 68%; left: 25%; animation-delay: 2s; font-size: 1.9rem; }
 
 @keyframes float-drift {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(20px, -20px) rotate(5deg); }
-    50% { transform: translate(-15px, -30px) rotate(-5deg); }
-    75% { transform: translate(15px, -15px) rotate(3deg); }
+    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+    25% { transform: translate(10px, -15px) rotate(3deg); opacity: 0.5; }
+    50% { transform: translate(-8px, -25px) rotate(-3deg); opacity: 0.6; }
+    75% { transform: translate(8px, -10px) rotate(2deg); opacity: 0.5; }
 }
 
-.hero-content {
-    max-width: 500px;
-    position: relative;
-    z-index: 2;
-}
-
-.badge {
-    background: var(--theme-primary);
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-weight: bold;
-    font-size: 0.8rem;
-    margin-bottom: 10px;
-    border: 2px solid #000;
-    color: var(--text);
-}
-
-.hero h1 {
-    font-size: 9rem;
-    line-height: 1;
-    color: var(--theme-accent);
-    text-shadow: 3px 3px 0px var(--theme-secondary);
-    margin-bottom: 10px;
-}
-
+/* --- Hero Image Side --- */
 .hero-image-wrapper {
     position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 18px;
 }
 
 .sparkle-container {
@@ -350,85 +349,177 @@ img[loading="lazy"].loaded {
     z-index: 5;
 }
 
-.sticker-decorations {
+/* Cute Photo Card Frame */
+.hero-photo-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 32px;
+    padding: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.1),
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 2px 0 rgba(255, 255, 255, 1),
+        0 0 0 1px var(--theme-secondary);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+.hero-photo-card:hover {
+    transform: translateY(-8px) rotate(-1.5deg);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 20px rgba(0, 0, 0, 0.08),
+        0 0 60px var(--theme-secondary),
+        inset 0 2px 0 rgba(255, 255, 255, 1);
+}
+
+/* Corner Decorations on Photo Card */
+.photo-card-deco {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    font-size: 1.8rem;
+    z-index: 6;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
     pointer-events: none;
-    z-index: 3;
 }
-
-.sticker {
-    position: absolute;
-    font-size: 2.5rem;
-    animation: sticker-float 3s ease-in-out infinite;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
-}
-.sticker-1 { top: 10%; left: -10%; animation-delay: 0s; }
-.sticker-2 { top: 15%; right: -5%; animation-delay: 0.5s; }
-.sticker-3 { bottom: 25%; left: -8%; animation-delay: 1s; }
-.sticker-4 { bottom: 30%; right: -10%; animation-delay: 1.5s; }
-
-@keyframes sticker-float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(10deg); }
-}
+.photo-card-deco-tl { top: -15px; left: -15px; }
+.photo-card-deco-tr { top: -15px; right: -15px; }
+.photo-card-deco-bl { bottom: -15px; left: -15px; }
+.photo-card-deco-br { bottom: -15px; right: -15px; }
 
 #hanni-img {
     width: 320px;
     height: 320px;
     object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid var(--theme-accent);
-    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    border-radius: 24px;
+    display: block;
+    transition: transform 0.35s ease;
 }
 
-#hanni-img:hover {
-    transform: scale(1.04);
-    box-shadow: 0 0 30px var(--theme-accent), 0 0 60px var(--theme-secondary);
-    border-color: var(--theme-primary);
+.hero-photo-card:hover #hanni-img {
+    transform: scale(1.02);
 }
 
-.speech-bubble {
+/* Mini Status Badge */
+.status-badge {
     position: absolute;
-    top: 20px;
-    right: -20px;
-    background: white;
-    padding: 10px 15px;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 6px 12px;
     border-radius: 20px;
-    border: 2px solid black;
-    font-family: var(--font-hand);
-    font-weight: bold;
-    font-size: 1.2rem;
-    animation: bounce 2s infinite;
-    color: var(--text);
+    border: 2px solid var(--theme-accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--theme-accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    z-index: 8;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    user-select: none;
 }
 
+.status-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.status-icon {
+    font-size: 1rem;
+    line-height: 1;
+    animation: status-pulse 2s ease-in-out infinite;
+}
+
+.status-text {
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* Music playing state */
+.status-badge.playing {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 214, 232, 0.95));
+    border-color: var(--theme-accent);
+}
+
+.status-badge.playing .status-icon {
+    animation: music-bounce 0.6s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes music-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Mobile optimization - simpler animation */
+@media (max-width: 768px) {
+    .status-badge {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .status-icon {
+        font-size: 0.9rem;
+        animation: none; /* Remove animation on mobile for performance */
+    }
+    
+    .status-badge.playing .status-icon {
+        animation: music-bounce 0.8s ease-in-out infinite; /* Slower animation when playing */
+    }
+    
+    .status-badge:hover {
+        transform: none; /* Remove hover effect on mobile */
+    }
+}
+
+/* Cute hover interaction on desktop */
+@media (min-width: 769px) {
+    .status-badge:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Outfit Selector */
 .outfit-selector {
-    margin-top: 15px;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    background: white;
-    padding: 8px;
-    border-radius: 30px;
-    border: 2px solid black;
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
     position: relative;
     z-index: 10;
 }
 
 .outfit-btn {
-    width: 35px;
-    height: 35px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    border: 1px solid black;
-    background: var(--theme-secondary);
+    border: 3px solid var(--theme-secondary);
+    background: white;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), 
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    font-size: 1.3rem;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -436,25 +527,73 @@ img[loading="lazy"].loaded {
 }
 
 .outfit-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
     background: var(--theme-primary);
+    border-color: var(--theme-accent);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 .outfit-btn:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
+}
+
+/* --- Hero Content Side --- */
+.hero-content {
+    max-width: 480px;
+    position: relative;
+    z-index: 2;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+    border: 2.5px solid var(--theme-accent);
+    color: var(--theme-accent);
+    letter-spacing: 1.5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    font-size: 7.5rem;
+    line-height: 0.95;
+    color: var(--theme-accent);
+    text-shadow: 
+        4px 4px 0px var(--theme-secondary),
+        1px 1px 0px rgba(255, 255, 255, 0.8);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 6px;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
 /* ========================================
    MUSIC PLAYER
    ======================================== */
 .music-player-real {
-    background: #fff;
-    border: 3px solid #000;
-    border-radius: 15px;
-    padding: 15px;
-    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 3px solid var(--theme-accent);
+    border-radius: 20px;
+    padding: 18px;
+    margin-top: 24px;
     width: 100%;
-    max-width: 350px;
-    box-shadow: 6px 6px 0px var(--theme-accent);
+    max-width: 380px;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.05),
+        6px 6px 0px var(--theme-secondary);
     position: relative;
     overflow: hidden;
 }
@@ -567,6 +706,27 @@ body.potato-mode .control-btn {
     color: var(--theme-accent);
     text-align: center;
     font-size: 1.5rem;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--theme-accent), transparent);
+    border-radius: 2px;
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; width: 80px; }
+    50% { opacity: 1; width: 120px; }
 }
 
 .section-desc-info {
@@ -591,18 +751,61 @@ body.potato-mode .control-btn {
     width: 280px;
     border: 2px solid #000000;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     color: var(--text);
+    position: relative;
+    overflow: hidden;
+}
+
+.trait-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.trait-card:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .trait-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.02);
     border-color: var(--theme-accent);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .card-icon {
     font-size: 3rem;
     margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.trait-card:hover .card-icon {
+    transform: scale(1.2) rotate(5deg);
+    animation: wiggle 0.5s ease;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: scale(1.2) rotate(5deg); }
+    25% { transform: scale(1.2) rotate(-5deg); }
+    50% { transform: scale(1.2) rotate(5deg); }
+    75% { transform: scale(1.2) rotate(-5deg); }
+}
+
+.trait-card h3,
+.trait-card p {
+    position: relative;
+    z-index: 1;
 }
 
 /* ========================================
@@ -626,6 +829,18 @@ body.potato-mode .control-btn {
     position: relative;
     cursor: crosshair;
     overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sticker-canvas:hover {
+    border-color: var(--theme-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    animation: pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% { border-width: 4px; }
+    50% { border-width: 6px; }
 }
 
 .placeholder-text {
@@ -916,12 +1131,12 @@ body.potato-mode .control-btn {
     filter: saturate(1.5) contrast(1.15) brightness(1.02) hue-rotate(-12deg);
 }
 
-/* Soft Glow: efek bercahaya, cocok untuk potret */
+/* Soft Glow: glowing effect, perfect for portraits */
 .filter-glow {
     filter: brightness(1.2) saturate(1.3) contrast(0.88) blur(0.25px);
 }
 
-/* Aesthetic: gaya indie, sedikit retro */
+/* Aesthetic: indie style, slightly retro */
 .filter-aesthetic {
     filter: saturate(0.85) contrast(1.1) brightness(1.05) sepia(0.15) hue-rotate(-6deg);
 }
@@ -1380,11 +1595,18 @@ body.potato-mode .badge {
     background: linear-gradient(135deg, #FFE4E1 0%, #FFF0F5 100%);
     border: 2px solid #FFB6C1;
     box-shadow: 0 4px 10px rgba(255, 182, 193, 0.3);
+    color: #FF69B4;
+}
+body.potato-mode .hero-photo-card {
+    background: linear-gradient(135deg, rgba(255, 240, 245, 0.8) 0%, rgba(255, 228, 225, 0.8) 100%);
+    border-color: #FFB6C1;
+    box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+body.potato-mode .photo-card-deco {
+    filter: drop-shadow(0 2px 8px rgba(255, 182, 193, 0.4));
 }
 body.potato-mode #hanni-img {
-    border-radius: 50%;
-    border: 6px solid transparent;
-    background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #FFB6C1, #DDA0DD, #FFB6C1) border-box;
+    border-radius: 22px;
     box-shadow: 0 0 30px rgba(255, 182, 193, 0.5), 0 0 60px rgba(221, 160, 221, 0.3);
     animation: softGlow 3s ease-in-out infinite;
 }
@@ -1392,11 +1614,11 @@ body.potato-mode #hanni-img {
     0%, 100% { box-shadow: 0 0 30px rgba(255,182,193,0.5), 0 0 60px rgba(221,160,221,0.3); }
     50% { box-shadow: 0 0 40px rgba(255,182,193,0.7), 0 0 80px rgba(221,160,221,0.5); }
 }
-body.potato-mode .speech-bubble {
+body.potato-mode .status-badge {
     background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 100%);
     border: 3px solid #FFB6C1;
     box-shadow: 0 5px 20px rgba(255, 182, 193, 0.4);
-    animation: bounce 2s infinite, gentlePulse 3s ease-in-out infinite;
+    color: #FF69B4;
 }
 body.potato-mode .outfit-selector {
     background: linear-gradient(135deg, #FFF 0%, #FFE4E1 100%);
@@ -1545,10 +1767,20 @@ body.dark-mode {
 }
 
 body.dark-mode .section-desc-info {
-    color: #d1d5db; /* abu muda, cocok di dark */
+    color: #d1d5db; /* light gray, suitable for dark */
 }
 
-/* ===== PERBAIKAN DARK MODE UNTUK OUTFIT & SPEECH BUBBLE ===== */
+/* ===== DARK MODE FIXES FOR HERO CARD, OUTFIT & STATUS BADGE ===== */
+body.dark-mode .hero-photo-card {
+    background: rgba(30, 30, 60, 0.6) !important;
+    border-color: rgba(192, 132, 252, 0.25) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(192, 132, 252, 0.1) !important;
+}
+
+body.dark-mode .photo-card-deco {
+    filter: drop-shadow(0 2px 8px rgba(192, 132, 252, 0.3));
+}
+
 body.dark-mode .outfit-selector {
     background: rgba(30, 30, 60, 0.9) !important;
     border-color: rgba(192, 132, 252, 0.4) !important;
@@ -1566,15 +1798,19 @@ body.dark-mode .outfit-btn:hover {
     border-color: #c084fc !important;
 }
 
-body.dark-mode .speech-bubble {
+body.dark-mode .status-badge {
     background: rgba(30, 30, 60, 0.85) !important;
     border-color: rgba(192, 132, 252, 0.4) !important;
     color: #e2e8f0 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
 }
 
+body.dark-mode .badge {
+    background: rgba(192, 132, 252, 0.12) !important;
+    border-color: rgba(192, 132, 252, 0.3) !important;
+}
+
 body.dark-mode #hanni-img {
-    border-color: rgba(192, 132, 252, 0.5) !important;
     box-shadow: 0 0 30px rgba(192, 132, 252, 0.3) !important;
 }
 
@@ -1617,7 +1853,7 @@ body.dark-mode .hero h1 {
 }
 body.dark-mode .subtitle { color: #d1d5db !important; }
 
-body.dark-mode .speech-bubble {
+body.dark-mode .status-badge {
     background: rgba(192, 132, 252, 0.12) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -2047,26 +2283,117 @@ body.potato-mode .playlist-artist {
         padding-right: 10px !important;
     }
 
-    img { max-width: 100% !important; height: auto !important; }
+    img:not(#hanni-img) { max-width: 100% !important; height: auto !important; }
     canvas { max-width: 100% !important; }
 
+    /* --- HERO MOBILE --- */
     .hero {
-        flex-direction: column-reverse;
+        flex-direction: column;
         text-align: center;
-        padding-top: 20px;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
+        padding: 40px 20px 50px !important;
+        gap: 35px;
+        min-height: auto;
     }
-    .hero h1 { font-size: 3rem; word-break: break-word; }
+
+    .hero h1 {
+        font-size: 4.5rem;
+        word-break: break-word;
+        text-shadow: 
+            3px 3px 0px var(--theme-secondary),
+            1px 1px 0px rgba(255, 255, 255, 0.6);
+    }
+
+    .hero-image-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .hero-photo-card {
+        padding: 14px;
+        border-radius: 24px;
+        border-width: 2.5px;
+    }
+
+    .hero-photo-card:hover {
+        transform: translateY(-4px);
+        box-shadow:
+            0 12px 32px rgba(0, 0, 0, 0.12),
+            0 4px 10px rgba(0, 0, 0, 0.06),
+            0 0 40px var(--theme-secondary);
+    }
 
     #hanni-img {
-        width: 250px;
-        height: 250px;
-        max-width: 90vw;
-        max-height: 90vw;
-        object-fit: cover;
+        width: 260px !important;
+        height: 260px !important;
+        border-radius: 20px;
     }
 
+    .photo-card-deco {
+        font-size: 1.4rem;
+    }
+    .photo-card-deco-tl { top: -12px; left: -12px; }
+    .photo-card-deco-tr { top: -12px; right: -12px; }
+    .photo-card-deco-bl { bottom: -12px; left: -12px; }
+    .photo-card-deco-br { bottom: -12px; right: -12px; }
+
+    .status-badge {
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.75rem;
+        padding: 5px 10px;
+        gap: 5px;
+    }
+    
+    .status-badge .status-icon {
+        font-size: 0.9rem;
+    }
+
+    .outfit-selector {
+        gap: 10px;
+        padding: 10px 16px;
+        border-width: 2px;
+    }
+
+    .outfit-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.15rem;
+        border-width: 2px;
+    }
+
+    .hero-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 10px !important;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+        padding: 6px 14px;
+        border-width: 2px;
+        letter-spacing: 1px;
+    }
+
+    .subtitle {
+        font-size: 1.05rem;
+    }
+
+    .music-player-real {
+        max-width: 100% !important;
+        width: 100%;
+        margin-top: 20px;
+        padding: 16px;
+    }
+
+    .floating-element {
+        font-size: 1.6rem !important;
+        opacity: 0.25;
+    }
+
+    /* --- NAVBAR MOBILE --- */
     .navbar {
         flex-direction: column;
         gap: 10px;
@@ -2157,17 +2484,6 @@ body.potato-mode .playlist-artist {
         gap: 10px !important;
     }
 
-    .speech-bubble {
-        max-width: 90% !important;
-        font-size: 0.9rem !important;
-    }
-
-    .outfit-selector {
-        max-width: 100% !important;
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-
     * { max-width: 100vw !important; }
     img, canvas, video, iframe, .photo-frame, .sticker-canvas {
         max-width: 100% !important;
@@ -2237,7 +2553,7 @@ body.potato-mode .playlist-artist {
     }
     body.potato-mode .hero h1,
     body.potato-mode #hanni-img,
-    body.potato-mode .speech-bubble,
+    body.potato-mode .status-badge,
     body.potato-mode .card-icon,
     body.potato-mode .trait-card,
     body.potato-mode .logo {
@@ -2247,7 +2563,7 @@ body.potato-mode .playlist-artist {
         will-change: auto !important;
     }
     body.potato-mode #hanni-img,
-    body.potato-mode .speech-bubble,
+    body.potato-mode .status-badge,
     body.potato-mode .trait-card,
     body.potato-mode .game-container,
     body.potato-mode .control-group {
@@ -2284,7 +2600,13 @@ body.potato-mode .playlist-artist {
 
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Soft pulse for decorative elements */
+@keyframes soft-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
 }
 
 @keyframes float {
@@ -2297,7 +2619,7 @@ button, .sticker-canvas {
 }
 
 /* ========================================
-   PERBAIKAN: GLOW TETAP MUNCUL DI DARK & COZY MODE
+   FIX: GLOW STILL APPEARS IN DARK & COZY MODE
    ======================================== */
 
 /* Dark Mode - Glow tetap muncul, lebih subtle */
@@ -2315,7 +2637,7 @@ body.potato-mode #hanni-img:hover {
 }
 
 @media (max-width: 768px) {
-    /* Izinkan glow di HP, tapi versi lebih subtle */
+    /* Allow glow on mobile, but more subtle version */
     body.dark-mode #hanni-img:hover {
         box-shadow: 0 0 20px rgba(192, 132, 252, 0.4) !important;
         transform: scale(1.02) !important;
@@ -2602,3 +2924,174 @@ body.potato-mode .custom-toast.info {
     background: rgba(255, 182, 193, 0.9);
 }
 
+
+
+/* ========================================
+   RESPONSIVE TABLET (768px - 1024px)
+   ======================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero {
+        padding: 70px 4% 55px;
+        gap: 45px;
+    }
+
+    .hero h1 {
+        font-size: 6rem;
+    }
+
+    #hanni-img {
+        width: 280px;
+        height: 280px;
+    }
+
+    .hero-photo-card {
+        padding: 18px;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .floating-element {
+        font-size: 1.8rem;
+        opacity: 0.35;
+    }
+
+    .music-player-real {
+        max-width: 340px;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Soft pulse for decorative elements */
+@keyframes soft-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ========================================
+   SCROLL ANIMATIONS
+   ======================================== */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Section Decorations - Floating Elements */
+.section-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.floating-deco {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.3;
+    animation: gentle-float 8s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Positioning for each decoration */
+.deco-1 { top: 10%; left: 8%; animation-delay: 0s; }
+.deco-2 { top: 15%; right: 10%; animation-delay: 1s; font-size: 1.8rem; }
+.deco-3 { bottom: 20%; left: 12%; animation-delay: 2s; font-size: 1.6rem; }
+.deco-4 { top: 25%; right: 15%; animation-delay: 0.5s; }
+.deco-5 { bottom: 15%; left: 10%; animation-delay: 1.5s; font-size: 1.8rem; }
+.deco-6 { top: 12%; left: 10%; animation-delay: 0s; font-size: 2.2rem; }
+.deco-7 { top: 20%; right: 12%; animation-delay: 1.5s; font-size: 1.7rem; }
+.deco-8 { bottom: 18%; left: 8%; animation-delay: 2.5s; font-size: 1.9rem; }
+.deco-9 { top: 15%; right: 15%; animation-delay: 0s; }
+.deco-10 { bottom: 20%; left: 12%; animation-delay: 1.2s; font-size: 2.1rem; }
+.deco-11 { top: 18%; left: 10%; animation-delay: 0.8s; font-size: 2rem; }
+.deco-12 { top: 25%; right: 12%; animation-delay: 2s; font-size: 1.8rem; }
+
+@keyframes gentle-float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    25% { transform: translate(8px, -12px) rotate(2deg); opacity: 0.4; }
+    50% { transform: translate(-6px, -20px) rotate(-2deg); opacity: 0.5; }
+    75% { transform: translate(6px, -8px) rotate(1deg); opacity: 0.4; }
+}
+
+/* Sections need relative positioning for decorations */
+.personality,
+.sticker-zone,
+.photo-booth-section,
+.mini-games-section,
+.playlist-section {
+    position: relative;
+}
+
+/* Mobile - Reduce decorations */
+@media (max-width: 768px) {
+    .floating-deco {
+        font-size: 1.4rem;
+        opacity: 0.2;
+        animation-duration: 10s;
+    }
+    
+    /* Hide some decorations on mobile for performance */
+    .deco-3, .deco-5, .deco-8, .deco-10, .deco-12 {
+        display: none;
+    }
+    
+    .animate-on-scroll {
+        /* Faster animation on mobile */
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    
+    /* Disable some decorative animations on mobile */
+    .section-title::after {
+        animation: none;
+        opacity: 0.5;
+    }
+    
+    .sticker-canvas:hover {
+        animation: none;
+    }
+    
+    .pixel-btn::before {
+        display: none; /* Disable shimmer on mobile */
+    }
+    
+    .trait-card::before {
+        display: none; /* Disable ripple effect on mobile */
+    }
+    
+    .trait-card:hover .card-icon {
+        animation: none; /* Disable wiggle on mobile */
+    }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .floating-deco {
+        font-size: 1.7rem;
+        opacity: 0.25;
+    }
+}
