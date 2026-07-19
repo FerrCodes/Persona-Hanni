@@ -53,6 +53,9 @@ body[data-theme="sunset"] {
     --theme-bg: linear-gradient(135deg, #FFF5E6 0%, #FFE4B5 50%, #FFB6C1 100%);
 }
 
+/* ========================================
+   LOW PERFORMANCE MODE — MOBILE
+   ======================================== */
 body.low-performance .gallery-card,
 body.low-performance .trait-card,
 body.low-performance .control-group,
@@ -64,6 +67,11 @@ body.low-performance .navbar {
 
 body.low-performance .particles-container {
     display: none !important;
+}
+
+/* Opsional: matikan transisi panjang agar lebih ringan */
+body.low-performance * {
+    transition-duration: 0.1s !important;
 }
 
 * {

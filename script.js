@@ -49,8 +49,11 @@ const observer = new IntersectionObserver((entries) => {
 // Deteksi performa dengan mengukur frame rate
 let frameCount = 0;
 let lastFrameTime = performance.now();
+let performanceCheckStarted = false;
 
 function checkPerformance() {
+    if (!isMobile) return; // Hanya berjalan di mobile
+
     frameCount++;
     const now = performance.now();
     if (now - lastFrameTime >= 1000) {
@@ -59,25 +62,32 @@ function checkPerformance() {
         lastFrameTime = now;
 
         // Jika fps di bawah 30, matikan efek berat
-        if (fps < 30 && isMobile) {
+        if (fps < 30) {
             document.body.classList.add('low-performance');
-            // Matikan backdrop-filter di semua elemen
+            
+            // Matikan backdrop-filter di semua elemen yang pakai
             document.querySelectorAll('.gallery-card, .trait-card, .control-group, .floating-bubble, .navbar')
                 .forEach(el => {
                     el.style.backdropFilter = 'none';
                     el.style.webkitBackdropFilter = 'none';
                 });
-            // Kurangi partikel
+            
+            // Kurangi partikel (sembunyikan container)
             const particles = document.getElementById('particles');
             if (particles) particles.style.display = 'none';
+
+            // Hentikan pengukuran setelah ditemukan performa rendah
+            return;
         }
     }
     requestAnimationFrame(checkPerformance);
 }
 
-// Jalankan hanya di mobile
+// Jalankan 2 detik setelah halaman dimuat (di mobile)
 if (isMobile) {
-    setTimeout(checkPerformance, 2000);
+    window.addEventListener('load', function() {
+        setTimeout(checkPerformance, 2000);
+    });
 }
 
 // ========================================
