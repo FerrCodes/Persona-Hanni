@@ -43,6 +43,44 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // ========================================
+// PERFORMANCE ADJUSTMENT — MOBILE
+// ========================================
+
+// Deteksi performa dengan mengukur frame rate
+let frameCount = 0;
+let lastFrameTime = performance.now();
+
+function checkPerformance() {
+    frameCount++;
+    const now = performance.now();
+    if (now - lastFrameTime >= 1000) {
+        const fps = frameCount;
+        frameCount = 0;
+        lastFrameTime = now;
+
+        // Jika fps di bawah 30, matikan efek berat
+        if (fps < 30 && isMobile) {
+            document.body.classList.add('low-performance');
+            // Matikan backdrop-filter di semua elemen
+            document.querySelectorAll('.gallery-card, .trait-card, .control-group, .floating-bubble, .navbar')
+                .forEach(el => {
+                    el.style.backdropFilter = 'none';
+                    el.style.webkitBackdropFilter = 'none';
+                });
+            // Kurangi partikel
+            const particles = document.getElementById('particles');
+            if (particles) particles.style.display = 'none';
+        }
+    }
+    requestAnimationFrame(checkPerformance);
+}
+
+// Jalankan hanya di mobile
+if (isMobile) {
+    setTimeout(checkPerformance, 2000);
+}
+
+// ========================================
 // OPTIMIZED PARTICLES
 // ========================================
 const particlesContainer = document.getElementById('particles');
@@ -52,7 +90,7 @@ let particleCount;
 if (isLowEnd) {
     particleCount = 0;
 } else if (isMobile) {
-    particleCount = 2;
+    particleCount = 1;
 } else {
     particleCount = 8;
 }
