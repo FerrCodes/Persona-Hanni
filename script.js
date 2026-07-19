@@ -1259,7 +1259,7 @@ window.addEventListener('load', function() {
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
             }, 2900);
-        }, 1200); // Jeda 900ms agar loading awal terlihat sebentar
+        }, 3180); // Jeda 900ms agar loading awal terlihat sebentar
     }
 });
 
@@ -1276,7 +1276,7 @@ if (clearStickersBtn) {
         const stickers = canvas.querySelectorAll('.sticker');
         stickers.forEach(el => el.remove());
 
-        showToast('🧹 Semua stiker telah dibersihkan!', 'info');
+        showToast('🧹 All stickers have been removed!', 'info');
         // Kasih efek feedback sebentar
         clearStickersBtn.textContent = '✅ Cleaned!';
         setTimeout(() => {
@@ -1298,7 +1298,7 @@ if (clearPhotoStickersBtn) {
         const stickers = container.querySelectorAll('.photo-sticker');
         stickers.forEach(el => el.remove());
 
-        showToast('🧹 Semua stiker telah dibersihkan!', 'info');
+        showToast('🧹 All stickers have been removed!', 'info');
         // Feedback tombol sebentar
         clearPhotoStickersBtn.textContent = '✅ Cleaned!';
         setTimeout(() => {
